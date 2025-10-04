@@ -1,14 +1,11 @@
 import React, { useState } from "react";
 import {
   FiHome,
-  FiUser,
-  FiBook,
-  FiSettings,
-  FiLogOut,
+  FiLogIn ,
   FiShoppingCart,
 } from "react-icons/fi";
 import { CiShop } from "react-icons/ci";
-import { FaHeart } from "react-icons/fa";
+import { FaHeart ,FaUserPlus  } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 
 export default function RightSidebar() {
@@ -22,8 +19,8 @@ export default function RightSidebar() {
   ];
 
   const navItemsBottom = [
-    { id: "login", title: "ورود", icon: <FiHome size={20} /> , to: "/login"},
-    { id: "register", title: "ثبت نام", icon: <FiUser size={20} />  , to: "/register"},
+    { id: "login", title: "ورود", icon: <FiLogIn size={20} /> , to: "/login"},
+    { id: "register", title: "ثبت نام", icon: <FaUserPlus size={20} />  , to: "/register"},
   ];
 
   return (
@@ -45,8 +42,8 @@ export default function RightSidebar() {
             <li key={it.id}>
               <NavLink
                 type="button"
-                onClick={it.onClick}
-                className={`w-full flex items-center gap-3 rounded-md px-2 py-2 hover:bg-gray-100 dark:hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-indigo-400 transition-colors`}
+                onClick={()=> setExpanded(false)}
+                className={`w-full flex items-center gap-3 rounded-md px-2 py-2 hover:bg-gray-100 dark:hover:bg-slate-800 `}
                 title={it.title}
               >
                 <div className="flex items-center justify-center w-8 h-8">
@@ -61,13 +58,13 @@ export default function RightSidebar() {
       </nav>
 
       <div className="p-3">
-        <ul className="flex flex-col gap-1 px-1">
+        <ul className="flex flex-col gap-1">
           {navItemsBottom.map((it) => (
             <li key={it.id}>
               <NavLink
                 type="button"
-                onClick={it.onClick}
-                className={`w-full flex items-center gap-3 rounded-md px-2 py-2 hover:bg-gray-100 dark:hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-indigo-400 transition-colors`}
+                onClick={()=> setExpanded(false)}
+                className={`w-full flex items-center gap-3 rounded-md  py-2 hover:bg-gray-100 dark:hover:bg-slate-800 `}
                 title={it.title}
                 to={it.to}
               >

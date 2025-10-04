@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import Input from "../components/ui/Input";
-import MainLayout from "../layouts/MainLayout";
+import Button from "../components/ui/Button";
 
 const Login = () => {
   const [form, setForm] = useState({ username: "", password: "" });
@@ -10,50 +10,59 @@ const Login = () => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+  const handleClick = (e) => {
+    e.preventDefault();
+    console.log(form)
+  };
+
   return (
-    <MainLayout>
-      <div className="flex w-full max-w-5xl bg-black">
-        <div className="flex-1">
-          <img
-            src="https://picsum.photos/800/600"
-            alt="login"
-            className="rounded-lg"
-          />
-        </div>
-        <div className="w-1/2 p-8 flex flex-col justify-center">
-          <h2 className="text-lg font-bold mb-6">ورود</h2>
+    <div className="flex w-full max-w-5xl bg-black">
+      <form className="w-2/3 p-8 flex flex-col justify-center">
+        <h2 className="text-lg font-bold mb-6">ورود</h2>
 
-          <Input
-            type="text"
-            label="نام کاربری"
-            name="username"
-            value={form.username}
-            onChange={handleChange}
-            placeholder="نام و نام خانوادگی"
-          />
+        <Input
+          type="text"
+          label="نام و نام خانوادگی"
+          name="username"
+          value={form.username}
+          onChange={handleChange}
+          placeholder="نام و نام خانوادگی"
+        />
 
-          <Input
-            type="password"
-            label="رمز عبور"
-            name="password"
-            value={form.password}
-            onChange={handleChange}
-            placeholder="••••••"
-          />
+        <Input
+          type="password"
+          label="رمز عبور"
+          name="password"
+          value={form.password}
+          onChange={handleChange}
+          placeholder="••••••"
+        />
 
-          <button className="mt-4 w-full bg-[var(--color-brand)] card-custom py-2 rounded">
-            ورود
-          </button>
+        <Button
+          className="mt-4 w-full bg-[var(--color-pink-primary)] card-custom py-2 rounded text-white"
+          type="submit"
+          onClick={handleClick}
+          disabled={false}
+        >
+          ورود
+        </Button>
 
-          <p className="mt-4 text-sm">
-            عضو نیستید؟{" "}
-            <Link to="/register" className="text-pink-500">
-              ثبت نام
-            </Link>
-          </p>
-        </div>
+        <p className="mt-4 text-sm">
+          عضو نیستید ؟
+          <Link to="/register" className="text-pink-500">
+            {`      ثبت نام`}
+          </Link>
+        </p>
+      </form>
+
+      <div className="">
+        <img
+          src="/public/auth-light.png"
+          alt="login"
+          className="rounded-lg w-full"
+        />
       </div>
-    </MainLayout>
+    </div>
   );
 };
 
