@@ -2,6 +2,21 @@
 
 @layer base {
   :root {
-    --color-brand: #6366f1;
+    --color-pink-primary: #e99cbf;
+    --color-pink-secondry: #831747;
+    --color-white: #fff;
+    --color-black: #000;
+    --color-bg-dark: #161616;
+    --color-gray: #d4d4d4;
   }
+}
+@font-face {
+  font-family: "Yekan";
+  src: url("../src/assets/fonts/IRANYekanX-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+* {
+  font-family: "Yekan";
 }
