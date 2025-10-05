@@ -10,7 +10,7 @@ const MainLayout = () => {
         <Navbar />
       </div>
 
-      <div className=" p-4 w-full ">
+      <div className=" p-4 w-full">
         <Outlet />
       </div>
     </div>

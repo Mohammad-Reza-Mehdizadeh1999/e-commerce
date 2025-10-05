@@ -12,8 +12,8 @@ export default function RightSidebar() {
   const [expanded, setExpanded] = useState(false);
 
   const navItemsTop = [
-    { id: "home", title: "داشبورد", icon: <FiHome size={20} /> },
-    { id: "shop", title: "فروشگاه", icon: <CiShop size={23} /> },
+    { id: "user/home", title: "داشبورد", icon: <FiHome size={20} /> },
+    { id: "products", title: "فروشگاه", icon: <CiShop size={23} /> },
     { id: "basket", title: "سبد خرید", icon: <FiShoppingCart size={20} /> },
     { id: "favourites", title: "علاقه مندی ها", icon: <FaHeart size={20} /> },
   ];
@@ -45,6 +45,7 @@ export default function RightSidebar() {
                 onClick={()=> setExpanded(false)}
                 className={`w-full flex items-center gap-3 rounded-md px-2 py-2 hover:bg-gray-100 dark:hover:bg-slate-800 `}
                 title={it.title}
+                to={it.id}
               >
                 <div className="flex items-center justify-center w-8 h-8">
                   {it.icon}
