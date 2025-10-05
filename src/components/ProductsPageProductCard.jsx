@@ -1,9 +1,10 @@
 import { FaShoppingCart } from "react-icons/fa";
 import { FiHeart } from "react-icons/fi";
+import { Link } from "react-router-dom";
 
-const ProductsPageProductCard = ({ image, title, brand, price, description }) => {
+const ProductsPageProductCard = ({id, image, title, brand, price, description }) => {
   return (
-    <div className=" rounded-lg shadow-sm overflow-hidden hover:shadow-md transition w-full">
+    <Link to={`/products/${id}`} className=" rounded-lg shadow-sm overflow-hidden hover:shadow-md transition w-full">
       <div className="relative">
         <img src={image} alt={title} className="w-full h-48 object-cover" />
         <span className="absolute bottom-2 right-2 bg-pink-800 text-white text-xs px-2 py-1 rounded-full">
@@ -33,7 +34,7 @@ const ProductsPageProductCard = ({ image, title, brand, price, description }) =>
           </button>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 

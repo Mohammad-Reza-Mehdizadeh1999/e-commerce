@@ -38,7 +38,7 @@ const Register = () => {
   };
 
   return (
-    <div className="flex w-full max-w-5xl bg-black">
+    <div className="flex items-center justify-center text-center mx-auto w-full max-w-5xl bg-black h-screen">
       <Toaster position="top-right" />
 
       <form

@@ -1,8 +1,9 @@
 import { FiHeart } from "react-icons/fi";
+import { Link } from "react-router-dom";
 
 export default function UserHomeProductCard({ product }) {
   return (
-    <div className="relative bg-slate-800 rounded-md overflow-hidden ">
+    <Link to={`/products/${product.id}`} className="relative bg-slate-800 rounded-md overflow-hidden ">
       <img
         src={product.image}
         alt={product.title}
@@ -13,13 +14,13 @@ export default function UserHomeProductCard({ product }) {
         <FiHeart size={18} />
       </button>
 
-      <div className="p-3 flex items-center justify-between text-white text-sm">
+      <div className="p-1.5 flex items-center justify-between text-white text-sm">
         <span className="truncate">{product.title}</span>
         <span className="bg-[var(--color-pink-primary)] text-xs px-2 py-1 rounded-full">
           {product.price.toLocaleString()} تومان
         </span>
 
       </div>
-    </div>
+    </Link>
   );
 }

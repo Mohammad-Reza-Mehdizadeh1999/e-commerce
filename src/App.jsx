@@ -4,7 +4,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import UserHomePage from "./pages/UserHomePage";
 import AllProducts from "./pages/AllProducts";
-import SingleProducts from "./pages/SingleProducts";
+import SingleProduct from "./pages/SingleProduct";
 
 function App() {
   return (
@@ -16,7 +16,7 @@ function App() {
           <Route path="register" element={<Register />} />
           <Route path="user/home" element={<UserHomePage />} />
           <Route path="products" element={<AllProducts />} />
-          <Route path="products/:productId" element={<SingleProducts />} />
+          <Route path="products/:productId" element={<SingleProduct />} />
         </Route>
       </Routes>
     </>
