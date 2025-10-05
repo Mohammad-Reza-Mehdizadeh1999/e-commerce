@@ -4,13 +4,13 @@ import { Toaster } from "react-hot-toast";
 
 const MainLayout = () => {
   return (
-    <div className="flex h-screen bg-black text-white">
+    <div className="flex  bg-black text-white">
       <Toaster position="top-right" />
       <div className="w-16 flex flex-col justify-between">
         <Navbar />
       </div>
 
-      <div className="flex-1 p-4 flex justify-center items-center">
+      <div className=" p-4 w-full ">
         <Outlet />
       </div>
     </div>
