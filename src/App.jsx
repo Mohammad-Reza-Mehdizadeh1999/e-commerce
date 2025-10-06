@@ -9,6 +9,7 @@ import UserOrders from "./pages/UserOrders";
 import UserFavorites from "./pages/UserFavorite";
 import  UserBasket  from "./pages/UserBasket";
 import UserShoppingProgress from "./pages/UserShoppingProgress";
+import UserProfileUpdate from "./pages/UserProfile";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route path="user/basket" element={<UserBasket />} />
           <Route path="user/favorites" element={<UserFavorites />} />
           <Route path="shop-progress" element={<UserShoppingProgress />} />
+          <Route path="user/profile-edit" element={<UserProfileUpdate />} />
           <Route path="user/my-orders" element={<UserOrders />} />
         </Route>
       </Routes>
