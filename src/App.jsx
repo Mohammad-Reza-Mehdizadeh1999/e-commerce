@@ -8,6 +8,7 @@ import SingleProduct from "./pages/SingleProduct";
 import UserOrders from "./pages/UserOrders";
 import UserFavorites from "./pages/UserFavorite";
 import  UserBasket  from "./pages/UserBasket";
+import UserShoppingProgress from "./pages/UserShoppingProgress";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path="products/:productId" element={<SingleProduct />} />
           <Route path="user/basket" element={<UserBasket />} />
           <Route path="user/favorites" element={<UserFavorites />} />
+          <Route path="shop-progress" element={<UserShoppingProgress />} />
           <Route path="user/my-orders" element={<UserOrders />} />
         </Route>
       </Routes>
