@@ -6,6 +6,7 @@ import UserHomePage from "./pages/UserHomePage";
 import AllProducts from "./pages/AllProducts";
 import SingleProduct from "./pages/SingleProduct";
 import UserOrders from "./pages/UserOrders";
+import UserFavorites from "./pages/UserFavorite";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="user/home" element={<UserHomePage />} />
           <Route path="products" element={<AllProducts />} />
           <Route path="products/:productId" element={<SingleProduct />} />
+          <Route path="user/favorites" element={<UserFavorites />} />
           <Route path="user/my-orders" element={<UserOrders />} />
         </Route>
       </Routes>
