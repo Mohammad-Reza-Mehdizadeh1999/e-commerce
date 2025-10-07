@@ -12,7 +12,7 @@ export default function RightSidebar() {
   const [expanded, setExpanded] = useState(false);
 
   const navItemsTop = [
-    { id: "user/home", title: "داشبورد", icon: <FiHome size={20} /> },
+    { id: "user/home", title: "صفحه اصلی", icon: <FiHome size={20} /> },
     { id: "products", title: "فروشگاه", icon: <CiShop size={23} /> },
     { id: "user/basket", title: "سبد خرید", icon: <FiShoppingCart size={20} /> },
     { id: "user/favorites", title: "علاقه مندی ها", icon: <FaHeart size={20} /> },
