@@ -7,7 +7,7 @@ import AllProducts from "./pages/AllProducts";
 import SingleProduct from "./pages/SingleProduct";
 import UserOrders from "./pages/UserOrders";
 import UserFavorites from "./pages/UserFavorite";
-import  UserBasket  from "./pages/UserBasket";
+import UserBasket from "./pages/UserBasket";
 import UserShoppingProgress from "./pages/UserShoppingProgress";
 import UserProfileUpdate from "./pages/UserProfile";
 import AdminAllUsersPage from "./pages/AdminAllUsersPage";
