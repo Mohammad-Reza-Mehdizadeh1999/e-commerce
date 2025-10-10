@@ -12,6 +12,7 @@ import UserShoppingProgress from "./pages/UserShoppingProgress";
 import UserProfileUpdate from "./pages/UserProfile";
 import AdminAllUsersPage from "./pages/AdminAllUsersPage";
 import AdminDashboard from "./pages/AdminDashboard";
+import AdminCreateProductPage from "./pages/AdminCreateProductPage";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
           <Route path="user/my-orders" element={<UserOrders />} />
           <Route path="admin/dashboard" element={<AdminDashboard />} />
           <Route path="admin/all-users" element={<AdminAllUsersPage />} />
+          <Route path="admin/create-product" element={<AdminCreateProductPage />} />
         </Route>
       </Routes>
     </>
