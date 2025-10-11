@@ -13,6 +13,7 @@ import UserProfileUpdate from "./pages/UserProfile";
 import AdminAllUsersPage from "./pages/AdminAllUsersPage";
 import AdminDashboard from "./pages/AdminDashboard";
 import AdminCreateProductPage from "./pages/AdminCreateProductPage";
+import AdminAllOrders from "./pages/AdminAllOrders";
 
 function App() {
   return (
@@ -27,12 +28,14 @@ function App() {
           <Route path="products/:productId" element={<SingleProduct />} />
           <Route path="user/basket" element={<UserBasket />} />
           <Route path="user/favorites" element={<UserFavorites />} />
-          <Route path="shop-progress" element={<UserShoppingProgress />} />
+          <Route path="user/shop-progress" element={<UserShoppingProgress />} />
+          <Route path="user/checkout" element={<UserCheckout />} />
           <Route path="user/profile-edit" element={<UserProfileUpdate />} />
           <Route path="user/my-orders" element={<UserOrders />} />
           <Route path="admin/dashboard" element={<AdminDashboard />} />
           <Route path="admin/all-users" element={<AdminAllUsersPage />} />
           <Route path="admin/create-product" element={<AdminCreateProductPage />} />
+          <Route path="admin/orders" element={<AdminAllOrders />} />
         </Route>
       </Routes>
     </>
