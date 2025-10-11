@@ -65,11 +65,10 @@ const UserCheckout = () => {
     },
   ];
   return (
-    <div className="flex flex-row gap-20 mr-18 mt-15  ">
-      <div className=" w-1/2 h-[20%] border border-[var(--color-gray)] p-8">
-
+    <div className="flex min-h-screen gap-20 mr-18 mt-15  ">
+      <div className=" w-1/2 h-[20%] border border-gray-700 p-8">
         <table className=" w-full text-sm text-gray-700 table-fixed  p-5 ">
-          <thead className=" text-gray-900 dark:text-[var(--color-white)] border-b-1">
+          <thead className=" text-gray-900 dark:text-[var(--color-white)] border-b-1 border-gray-700x">
             <tr className="  ">
               <th className="px-4 py-2 text-right">عکس</th>
               <th className="px-4 py-2 text-right">نام محصول</th>
@@ -78,7 +77,7 @@ const UserCheckout = () => {
               <th className="px-4 py-2 text-left">قیمت نهایی</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="dark:text-[var(--color-white)]">
             {products.map((product) => (
               <ShoppingProgressTableRow
                 image={product.image}
@@ -101,6 +100,7 @@ const UserCheckout = () => {
         m="۱۰,۰۰۰ "
         finalPrice="۱۲۰,۰۰۰ "
       />
+
     </div>
   );
 };
