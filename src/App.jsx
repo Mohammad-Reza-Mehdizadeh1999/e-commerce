@@ -14,6 +14,7 @@ import AdminAllUsersPage from "./pages/AdminAllUsersPage";
 import AdminDashboard from "./pages/AdminDashboard";
 import AdminCreateProductPage from "./pages/AdminCreateProductPage";
 import AdminAllOrders from "./pages/AdminAllOrders";
+import UserCheckout from "./pages/UserCheckout";
 
 function App() {
   return (
