@@ -2,7 +2,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 
 const api = axios.create({
-  baseURL: "https://qbc9.liara.run",
+  baseURL: "https://qbc9.liara.run/api",
   headers: {
     "Content-Type": "application/json",
   },

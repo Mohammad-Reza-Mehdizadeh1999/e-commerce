@@ -1,27 +1,37 @@
 import { Controller, useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate  } from "react-router-dom";
 import toast from "react-hot-toast";
 
 import Input from "../components/ui/Input";
 import Button from "../components/ui/Button";
+import { loginUser } from "../api/requests/auth";
 
 const Login = () => {
+
+  const navigate = useNavigate();
+
   const {
     control,
     handleSubmit,
     formState: { errors, isSubmitting },
     setError,
   } = useForm({
-    defaultValues: { username: "", password: "" },
+    defaultValues: { email: "", password: "" },
   });
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (data) => {    
     try {
-
-      toast.success(`خوش آمدید ${data.username} 🙂`);
-      console.log("فرم ارسال شد:", data);
+      const res = await loginUser(data);
+      console.log("فرم ارسال شد:", res);
+      toast.success(`خوش آمدید ${res.data.username} 🙂`);
+      if (res.data._id) {
+        localStorage.setItem("id", res.data._id);
+        localStorage.setItem("isAdmin", res.data.isAdmin);
+      }
+      if(res.status === 200){
+        navigate("/user/home");
+      }
     } catch (err) {
-
       toast.error("خطا در ورود :( لطفاً مجدداً تلاش کنید");
     }
   };
@@ -35,7 +45,6 @@ const Login = () => {
 
   return (
     <div className="flex items-center justify-center text-center mx-auto w-full max-w-5xl bg-black h-screen">
-
       <form
         onSubmit={handleSubmit(onSubmit, onInvalid)}
         className="w-2/3 p-8 flex flex-col justify-center"
@@ -44,7 +53,7 @@ const Login = () => {
 
         {/* username */}
         <Controller
-          name="username"
+          name="email"
           control={control}
           rules={{
             required: "نام کاربری الزامی است",
