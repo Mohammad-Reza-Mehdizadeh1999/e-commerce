@@ -23,12 +23,12 @@ const Login = () => {
     try {
       const res = await loginUser(data);
       console.log("فرم ارسال شد:", res);
-      toast.success(`خوش آمدید ${res.data.username} 🙂`);
       if (res.data._id) {
         localStorage.setItem("id", res.data._id);
         localStorage.setItem("isAdmin", res.data.isAdmin);
       }
       if(res.status === 200){
+        toast.success(`خوش آمدید ${res.data.username} 🙂`);
         navigate("/user/home");
       }
     } catch (err) {

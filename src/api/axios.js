@@ -2,7 +2,8 @@ import axios from "axios";
 import toast from "react-hot-toast";
 
 const api = axios.create({
-  baseURL: "https://qbc9.liara.run/api",
+  baseURL: import.meta.env.VITE_APP_BASE_URL,
+  withCredentials: true,
   headers: {
     "Content-Type": "application/json",
   },
@@ -43,5 +44,4 @@ api.interceptors.response.use(
     return Promise.reject(error);
   }
 );
-
 export default api;

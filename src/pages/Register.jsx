@@ -30,7 +30,7 @@ const Register = () => {
       const res = await registerUser(data);
       console.log("ثبت نام موفق:", res);
 
-      toast.success(`ثبت‌نام با موفقیت انجام شد`);
+      // toast.success(`ثبت‌نام با موفقیت انجام شد`);
 
       navigate("/login")
     } catch (err) {
