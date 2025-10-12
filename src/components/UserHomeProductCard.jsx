@@ -3,11 +3,13 @@ import { FaHeart } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 export default function UserHomeProductCard({ product }) {
+  console.log("pt" , product);
+  
   return (
-    <Link to={`/products/${product.id}`} className="relative bg-slate-800 rounded-md overflow-hidden hover:scale-105 transition-transform duration-300 shadow-lg">
+    <Link to={`/products/${product._id}`} className="relative bg-slate-800 rounded-md overflow-hidden hover:scale-105 transition-transform duration-300 shadow-lg">
       <img
         src={product.image}
-        alt={product.title}
+        alt={product.name}
         className="w-full h-60 object-cover"
       />
 
@@ -20,7 +22,7 @@ export default function UserHomeProductCard({ product }) {
       </button>
 
       <div className="p-1.5 flex items-center justify-between text-white text-sm">
-        <span className="truncate">{product.title}</span>
+        <span className="truncate">{product.name}</span>
         <span className="bg-[var(--color-pink-primary)] text-xs px-2 py-1 rounded-full">
           {product.price.toLocaleString()} تومان
         </span>
