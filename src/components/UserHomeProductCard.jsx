@@ -3,7 +3,6 @@ import { FaHeart } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 export default function UserHomeProductCard({ product }) {
-  console.log("pt" , product);
   
   return (
     <Link to={`/products/${product._id}`} className="relative bg-slate-800 rounded-md overflow-hidden hover:scale-105 transition-transform duration-300 shadow-lg">

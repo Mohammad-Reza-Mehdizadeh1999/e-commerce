@@ -20,3 +20,8 @@
 * {
   font-family: "Yekan";
 }
+
+.active{
+  color: #e7a6c3;
+  background-color: #7a0138;
+}

@@ -19,9 +19,6 @@ export default function UserHomePage() {
 
   const cart = useCartContext()
 
-  console.log("cart" , cart);
-  
-
 
   useEffect(() => {
     const fetchProducts = async () => {

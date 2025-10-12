@@ -4,13 +4,13 @@ import { BsInfoCircle, BsShopWindow } from "react-icons/bs";
 import { FiShoppingCart } from "react-icons/fi";
 import { CiShoppingBasket } from "react-icons/ci";
 
-const SingleProductInformation = () => {
+const SingleProductInformation = ({product}) => {
   return (
     <div className="flex flex-col md:flex-row justify-between items-center bg-black text-white rounded-2xl p-6 md:p-10 gap-10">
       <div className="w-full md:w-1/2 flex justify-center">
         <div className="bg-white rounded-2xl p-4">
           <img
-            src="/public/phone1.webp"
+            src={product.image}
             alt="MacBook Air M2"
             className="w-full max-w-md object-contain"
           />
@@ -20,7 +20,7 @@ const SingleProductInformation = () => {
       <div className="flex flex-col justify-center w-full md:w-1/2 space-y-5">
         <div className="flex items-center justify-between">
           <h2 className="text-2xl md:text-3xl font-semibold">
-            Apple MacBook Air M2
+            {product.name}
           </h2>
           <button
             className="pl-5 text-gray-400 hover:text-pink-500 transition cursor-pointer"
@@ -31,25 +31,24 @@ const SingleProductInformation = () => {
         </div>
 
         <p className="text-gray-400 leading-relaxed">
-          مک بوک ایر با تراشه M2 دارای صفحه نمایش 13.6 اینچی رتینا است. تا 18
-          ساعت عمر باتری و طراحی بدون فن.
+          {product.description}
         </p>
 
-        <p className="text-4xl font-bold mt-4">۱۰,۰۰۰ تومان</p>
+        <p className="text-4xl font-bold mt-4">{product.price.toLocaleString()} تومان</p>
 
         <div className="flex items-center justify-between w-1/2 text-gray-300 mt-3 text-sm">
           <div className="space-y-2">
             <p className="flex items-center gap-2">
               <FiShoppingCart />
-              <span className="font-semibold">تعداد :</span> ۵۲ عدد
+              <span className="font-semibold">تعداد :</span> {product.quantity} عدد
             </p>
             <p className="flex items-center gap-2">
               <CiShoppingBasket />
-              <span className="font-semibold">موجودی :</span> ۱۰
+              <span className="font-semibold">موجودی :</span> {product.countInStock}
             </p>
             <p className="flex items-center gap-2">
               <FaStar />
-              <span className="font-semibold">امتیاز :</span> ۵
+              <span className="font-semibold">امتیاز :</span> {Math.round(product.rating * 100) / 100}
             </p>
           </div>
 
@@ -62,7 +61,7 @@ const SingleProductInformation = () => {
               <BsInfoCircle /> زمان بروز رسانی : چند لحظه قبل
             </p>
             <p className="flex items-center gap-2">
-              <FaStar /> نظرات : ۴۵۰۲
+              <FaStar /> نظرات : {product.numReviews}
             </p>
           </div>
         </div>

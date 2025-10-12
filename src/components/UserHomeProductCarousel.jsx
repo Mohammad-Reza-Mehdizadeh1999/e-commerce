@@ -13,7 +13,7 @@ const UserHomeProductCarousel = ({rowItems}) => {
       <Swiper pagination={true} modules={[Pagination]} className="mySwiper">
         {rowItems?.slice(0, 8).map((p) => (
           <SwiperSlide key={p.id}>
-            <Link to={`/products/${p.id}`} key={p.id}>
+            <Link to={`/products/${p._id}`} key={p.id}>
               <div className="flex justify-center mx-auto p-4 w-full">
                 <div className="bg-white dark:bg-gray-800 rounded-lg shadow  flex flex-col overflow-hidden p-4">
                   <div className="w-xl bg-gray-100 flex justify-center items-center">

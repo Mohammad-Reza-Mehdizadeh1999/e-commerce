@@ -33,7 +33,6 @@ export default function RightSidebar() {
       onBlur={() => setExpanded(false)}
       aria-expanded={expanded}
     >
-      {/* top spacer (optional logo) */}
 
       {/* nav items */}
       <nav className="flex-1 overflow-auto py-3">

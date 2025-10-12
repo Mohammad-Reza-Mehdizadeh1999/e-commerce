@@ -34,6 +34,7 @@ function App() {
           <Route path="user/checkout" element={<UserCheckout />} />
           <Route path="user/profile-edit" element={<UserProfileUpdate />} />
           <Route path="user/my-orders" element={<UserOrders />} />
+          <Route path="user/my-orders/:orderId" element={<UserOrders />} />
           <Route path="admin/dashboard" element={<AdminDashboard />} />
           <Route path="admin/all-users" element={<AdminAllUsersPage />} />
           <Route path="admin/create-product" element={<AdminCreateProductPage />} />
