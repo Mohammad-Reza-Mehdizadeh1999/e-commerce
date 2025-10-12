@@ -10,17 +10,23 @@ import UserHomeProductCarousel from "../components/UserHomeProductCarousel";
 import UserHomeSpecialProductsSection from "../components/UserHomeSpecialProductsSection";
 import { getAllProducts } from "../api/requests/products";
 import Spinner from "../components/ui/Spinner";
+import { useCartContext } from "../context/useCartContext";
 
 
 export default function UserHomePage() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const cart = useCartContext()
+
+  console.log("cart" , cart);
+  
+
+
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         const data = await getAllProducts();
-        console.log(data);
         
         setProducts(data);
       } catch (error) {
@@ -44,6 +50,7 @@ export default function UserHomePage() {
   }
 
   const rowItems = products.slice(0, 4);
+
 
   return (
     <main>
