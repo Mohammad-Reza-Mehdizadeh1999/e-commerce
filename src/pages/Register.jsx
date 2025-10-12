@@ -1,7 +1,6 @@
 import { Controller, useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
-
 import Input from "../components/ui/Input";
 import Button from "../components/ui/Button";
 import { registerUser } from "../api/requests/auth";
@@ -29,9 +28,7 @@ const Register = () => {
     try {
       const res = await registerUser(data);
       console.log("ثبت نام موفق:", res);
-
-      // toast.success(`ثبت‌نام با موفقیت انجام شد`);
-
+      toast.success(`ثبت‌نام با موفقیت انجام شد`);
       navigate("/login")
     } catch (err) {
       console.error("Register Error:", err);

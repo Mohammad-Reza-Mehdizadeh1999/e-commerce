@@ -24,6 +24,8 @@ export default function UserHomePage() {
     const fetchProducts = async () => {
       try {
         const data = await getAllProducts();
+        console.log(data);
+        
         
         setProducts(data);
       } catch (error) {

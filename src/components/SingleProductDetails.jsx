@@ -37,7 +37,7 @@ export default function SingleProductDetails({product , productCategory}) {
       </div>
 
       <div className="w-[70%]">
-        {detailCategory === "comment" && <SingleProductsAddComment />}
+        {detailCategory === "comment" && <SingleProductsAddComment product={product} />}
         {detailCategory === "showComments" && <SingleProductsAllComments product={product} />}
         {detailCategory === "related" && <SingleProductsRelated productCategory={productCategory} />}
       </div>

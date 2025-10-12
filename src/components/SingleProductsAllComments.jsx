@@ -21,7 +21,7 @@ export default function SingleProductsAllComments({ product }) {
           className="bg-[#151515] text-gray-200 rounded-lg p-4 w-full max-w-2xl mx-auto shadow-sm border border-gray-700"
         >
           <div className="flex justify-between items-center text-sm text-gray-400 mb-2">
-            <span>{comment.name || "حسین حسینی"}</span>
+            <span>{comment.name || "کاربر"}</span>
             <span>
               {new Date(comment.updatedAt).toLocaleDateString("en-US")}
             </span>

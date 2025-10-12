@@ -1,16 +1,40 @@
 import { useState } from "react";
 import TextArea from "./ui/TextArea ";
+import toast from "react-hot-toast";
+import { addProductReview } from "../api/requests/addComment";
 
-export default function SingleProductsAddComment() {
+export default function SingleProductsAddComment({product}) {
   const [rating, setRating] = useState("");
   const [comment, setComment] = useState("");
+  const [loading, setLoading] = useState(false);
+  
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log({ rating, comment });
-    alert("نظر شما ثبت شد ✅");
-    setRating("");
-    setComment("");
+
+    if (!rating || !comment.trim()) {
+      toast.error("لطفاً امتیاز و نظر خود را وارد کنید!");
+      return;
+    }
+
+    try {
+      setLoading(true);
+      const reviewData = {
+        rating: Number(rating),
+        comment,
+      };
+
+      await addProductReview(product._id , reviewData);
+
+      toast.success("نظر شما با موفقیت ثبت شد ✅");
+      setRating("");
+      setComment("");
+    } catch (err) {
+      console.error("Error submitting review:", err);
+      toast.error("ثبت نظر با خطا مواجه شد!");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -45,7 +69,7 @@ export default function SingleProductsAddComment() {
         type="submit"
         className="bg-pink-600 hover:bg-pink-700 text-white rounded-md py-2 px-4 mt-2 transition-all"
       >
-        ثبت نظر
+        {loading ? "در حال ارسال..." : "ثبت نظر"}
       </button>
     </form>
   );
