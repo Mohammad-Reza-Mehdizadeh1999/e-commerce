@@ -4,12 +4,12 @@ import SingleProductsAddComment from "./SingleProductsAddComment";
 import SingleProductsAllComments from "./SingleProductsAllComments";
 import SingleProductsRelated from "./SingleProductsRelated";
 
-export default function SingleProductDetails() {
+export default function SingleProductDetails({product , productCategory}) {
   const [detailCategory, setDetailCategory] = useState("comment");
 
   return (
     <section className="p-6 text-white bg-black w-2/3 mx-auto flex justify-between">
-      <div className="flex flex-col items-start justify-center gap-5">
+      <div className="flex flex-col items-start  gap-5">
         <Button
           onClick={() => setDetailCategory("comment")}
           className={`${
@@ -38,8 +38,8 @@ export default function SingleProductDetails() {
 
       <div className="w-[70%]">
         {detailCategory === "comment" && <SingleProductsAddComment />}
-        {detailCategory === "showComments" && <SingleProductsAllComments />}
-        {detailCategory === "related" && <SingleProductsRelated />}
+        {detailCategory === "showComments" && <SingleProductsAllComments product={product} />}
+        {detailCategory === "related" && <SingleProductsRelated productCategory={productCategory} />}
       </div>
 
       <div></div>

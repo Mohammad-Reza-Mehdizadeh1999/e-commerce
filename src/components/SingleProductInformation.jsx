@@ -4,7 +4,7 @@ import { BsInfoCircle, BsShopWindow } from "react-icons/bs";
 import { FiShoppingCart } from "react-icons/fi";
 import { CiShoppingBasket } from "react-icons/ci";
 
-const SingleProductInformation = ({product}) => {
+const SingleProductInformation = ({product , productCategory}) => {
   return (
     <div className="flex flex-col md:flex-row justify-between items-center bg-black text-white rounded-2xl p-6 md:p-10 gap-10">
       <div className="w-full md:w-1/2 flex justify-center">
@@ -55,10 +55,10 @@ const SingleProductInformation = ({product}) => {
           <div className="space-y-2">
             <p className="flex items-center gap-2">
               <BsShopWindow />
-              <span className="font-semibold">برند :</span> اپل
+              <span className="font-semibold">برند :</span> {productCategory?.name}
             </p>
             <p className="flex items-center gap-2">
-              <BsInfoCircle /> زمان بروز رسانی : چند لحظه قبل
+              <BsInfoCircle /> زمان بروز رسانی :   {new Date(product.updatedAt).toLocaleDateString("en-US")}
             </p>
             <p className="flex items-center gap-2">
               <FaStar /> نظرات : {product.numReviews}
