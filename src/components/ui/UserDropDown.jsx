@@ -8,7 +8,8 @@ export default function UserDropDown() {
 
   const menuItems = [
     { id: 1, title: "پروفایل", to: "/user/profile-edit" },
-    { id: 2, title: "خروج از حساب", to: "/login" },
+    { id: 2, title: "سفارشات من", to: "/user/my-orders" },
+    { id: 3, title: "خروج از حساب", to: "/login" },
   ];
 
   return (
