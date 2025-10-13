@@ -8,19 +8,22 @@ export default function AdminDropDown() {
 
   const menuItems = [
     { id: 1, title: "داشبورد", to: "/admin/dashboard" },
-    { id: 2, title: "محصول جدید", to: "/admin/new-product" },
-    { id: 3, title: "مدیریت کاربران", to: "/admin/users" },
+    { id: 2, title: "محصول جدید", to: "/admin/create-product" },
+    { id: 3, title: "مدیریت کاربران", to: "/admin/all-users" },
     { id: 4, title: "سفارشات", to: "/admin/orders" },
-    { id: 5, title: "پروفایل", to: "/admin/profile" },
     { id: 6, title: "خروج از حساب", to: "/login" },
   ];
 
   return (
-    <div className="flex flex-col justify-center items-center gap-1.5 text-[var(--color-black)] dark:text-[var(--color-white)] relative">
-
+    <div
+      className="flex flex-col justify-center items-center gap-1.5 text-[var(--color-black)] dark:text-[var(--color-white)] relative"
+      onMouseEnter={() => setIsOpen(true)}
+      onMouseLeave={() => setIsOpen(false)}
+    >
       <div
-        className={`w-[160px] bg-[#111] rounded-xl border border-gray-700 p-3 text-[var(--color-black)] dark:text-[var(--color-white)] 
-        transition-all duration-500 ease-in-out origin-bottom
+        className={`absolute bottom-10 w-[170px] bg-[#111] rounded-xl border border-gray-700 p-3 
+        text-[var(--color-black)] dark:text-[var(--color-white)] 
+        transition-all duration-300 ease-in-out origin-bottom z-50
         ${isOpen ? "opacity-100 translate-y-0 scale-y-100" : "opacity-0 -translate-y-3 scale-y-0"} `}
       >
         <div className="flex flex-col space-y-1">
@@ -28,6 +31,7 @@ export default function AdminDropDown() {
             <Link
               key={item.id}
               to={item.to}
+              onClick={() => setIsOpen(false)}
               className={`block px-3 py-1.5 text-sm rounded-lg transition-colors ${
                 location.pathname === item.to
                   ? "bg-pink-900 text-pink-300"
@@ -42,7 +46,7 @@ export default function AdminDropDown() {
 
       <div
         className="flex items-center justify-between cursor-pointer select-none"
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={() => setIsOpen((prev) => !prev)}
       >
         <span className="flex items-center justify-center gap-1 text-sm font-medium">
           ادمین
