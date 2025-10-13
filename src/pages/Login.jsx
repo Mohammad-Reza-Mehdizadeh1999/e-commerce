@@ -49,7 +49,7 @@ const Login = () => {
         onSubmit={handleSubmit(onSubmit, onInvalid)}
         className="w-2/3 p-8 flex flex-col justify-center"
       >
-        <h2 className="text-lg font-bold mb-6 text-white">ورود</h2>
+        <h2 className="text-lg font-bold mb-10 text-white ">ورود</h2>
 
         {/* username */}
         <Controller
@@ -66,8 +66,8 @@ const Login = () => {
             <Input
               {...field}
               type="text"
-              label="نام و نام خانوادگی"
-              placeholder="نام و نام خانوادگی"
+              label="ایمیل"
+              placeholder="ایمیل"
               className=""
             />
           )}

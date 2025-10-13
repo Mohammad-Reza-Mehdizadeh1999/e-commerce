@@ -1,86 +1,120 @@
+import { useEffect, useState } from "react";
 import FilterProducts from "../components/FilterProducts";
 import ProductsPageProductCard from "../components/ProductsPageProductCard";
+import toast from "react-hot-toast";
+import { getAllProductsPagination } from "../api/requests/products";
 
 export default function AllProducts() {
-  const products = [
-    {
-      id: 1,
-      image:
-        "/public/phone4.webp",
-      title: "Apple iPhone 14 Pro",
-      brand: "Apple",
-      price: "۱۰,۰۰۰",
-      description:
-        "آیفون 14 پرو دارای صفحه‌نمایش 6.1 اینچی Super Retina XDR است که تجربه بصری فوق‌العاده‌ای را ارائه می‌دهد.",
-    },
-    {
-      id: 2,
-      image:
-        "/public/phone2.webp",
-      title: "Apple iPhone 14 Pro",
-      brand: "Apple",
-      price: "۱۰,۰۰۰",
-      description:
-        "آیفون 14 پرو با طراحی زیبا و عملکرد قدرتمند برای کاربرانی که بهترین را می‌خواهند.",
-    },
-    {
-      id: 3,
-      image:
-        "/public/phone3.jpg",
-      title: "Apple iPhone 14 Pro",
-      brand: "Apple",
-      price: "۱۰,۰۰۰",
-      description:
-        "این مدل جدید از آیفون با قابلیت‌های پیشرفته‌ی دوربین و پردازنده سریع‌تر ارائه می‌شود.",
-    },
-    {
-      id: 4,
-      image:
-        "/public/phone1.webp",
-      title: "Apple iPhone 14 Pro",
-      brand: "Apple",
-      price: "۱۰,۰۰۰",
-      description:
-        "صفحه‌نمایش فوق روشن و کیفیت ساخت بالای آیفون 14 پرو آن را در صدر بازار قرار داده است.",
-    },
-    {
-      id: 5,
-      image:
-        "/public/phone2.webp",
-      title: "Apple iPhone 14 Pro",
-      brand: "Apple",
-      price: "۱۰,۰۰۰",
-      description:
-        "این گوشی با دوربین فوق‌العاده و سیستم‌عامل iOS تجربه‌ای روان و لذت‌بخش فراهم می‌کند.",
-    },
-    {
-      id: 6,
-      image:
-        "/public/phone4.webp",
-      title: "Apple iPhone 14 Pro",
-      brand: "Apple",
-      price: "۱۰,۰۰۰",
-      description:
-        "یکی از بهترین گوشی‌های سال با کیفیت ساخت بی‌نظیر و امکانات فوق‌العاده.",
-    },
-  ];
+  const [products, setProducts] = useState([]);
+  const [page, setPage] = useState(1);
+  const [size] = useState(6);
+  const [totalPages, setTotalPages] = useState(1);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      setLoading(true);
+      try {
+        const data = await getAllProductsPagination(size, page);
+        console.log("pagedata",Math.ceil(data.products.length / size));
+        
+        setProducts(data.products || []);
+        setTotalPages(data.total || 1); 
+      } catch (error) {
+        console.error("Error fetching products:", error);
+        toast.error("خطا در دریافت محصولات!");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, [page, size]);
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="w-12 h-12 border-4 border-pink-500 border-t-transparent rounded-full animate-spin"></div>
+      </div>
+    );
+  }
+
+  const handlePageChange = (newPage) => {
+    if (newPage >= 1 && newPage <= totalPages) setPage(newPage);
+  };
 
   return (
-    <div className="h-screen flex justify-center">
-      <FilterProducts />
-      <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {products.map((product) => (
-          <ProductsPageProductCard
-            key={product.id}
-            id={product.id}
-            image={product.image}
-            title={product.title}
-            brand={product.brand}
-            price={product.price}
-            description={product.description}
-          />
-        ))}
+    <>
+      <div className="min-h-screen flex  items-center bg-black text-white px-6 ">
+        <FilterProducts />
+
+        {/* لیست محصولات */}
+        <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 ">
+          {products.length > 0 ? (
+            products.map((product) => (
+              <ProductsPageProductCard
+                key={product._id}
+                id={product._id}
+                image={product.image}
+                title={product.title}
+                brand={product.brand}
+                price={product.price}
+                description={product.description}
+              />
+            ))
+          ) : (
+            <p className="text-gray-400 col-span-full text-center">
+              هیچ محصولی یافت نشد.
+            </p>
+          )}
+        </div>
       </div>
-    </div>
+
+      {/* Pagination Controls */}
+      <div className="flex items-center justify-center gap-3">
+        <button
+          onClick={() => handlePageChange(page - 1)}
+          disabled={page === 1}
+          className={`px-4 py-2 rounded-md border border-pink-600 transition-all ${
+            page === 1
+              ? "text-gray-500 border-gray-600 cursor-not-allowed"
+              : "hover:bg-pink-600 hover:text-white"
+          }`}
+        >
+          قبلی
+        </button>
+
+        <div className="flex gap-2">
+          {[...Array(totalPages)].map((_, index) => {
+            const pageNumber = index + 1;
+            return (
+              <button
+                key={index}
+                onClick={() => handlePageChange(pageNumber)}
+                className={`w-9 h-9 rounded-md text-sm font-medium transition-all ${
+                  page === pageNumber
+                    ? "bg-pink-600 text-white"
+                    : "bg-gray-800 text-gray-300 hover:bg-gray-700"
+                }`}
+              >
+                {pageNumber}
+              </button>
+            );
+          })}
+        </div>
+
+        <button
+          onClick={() => handlePageChange(page + 1)}
+          disabled={page === totalPages}
+          className={`px-4 py-2 rounded-md border border-pink-600 transition-all ${
+            page === totalPages
+              ? "text-gray-500 border-gray-600 cursor-not-allowed"
+              : "hover:bg-pink-600 hover:text-white"
+          }`}
+        >
+          بعدی
+        </button>
+      </div>
+    </>
   );
 }

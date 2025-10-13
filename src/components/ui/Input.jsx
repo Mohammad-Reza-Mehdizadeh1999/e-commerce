@@ -22,7 +22,7 @@ export default function Input({
   return (
     <div className="mb-4">
       {label && (
-        <label className="block mb-1 font-medium" htmlFor={name}>
+        <label className="block font-medium text-right mb-2.5" htmlFor={name}>
           {label}
         </label>
       )}
