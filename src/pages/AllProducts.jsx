@@ -16,7 +16,6 @@ export default function AllProducts() {
       setLoading(true);
       try {
         const data = await getAllProductsPagination(size, page);
-        console.log("pagedata",Math.ceil(data.products.length / size));
         
         setProducts(data.products || []);
         setTotalPages(data.total || 1); 
@@ -45,7 +44,7 @@ export default function AllProducts() {
 
   return (
     <>
-      <div className="min-h-screen flex  items-center bg-black text-white px-6 ">
+      <div className="min-h-screen flex  mt-3 bg-black text-white px-6 ">
         <FilterProducts />
 
         {/* لیست محصولات */}

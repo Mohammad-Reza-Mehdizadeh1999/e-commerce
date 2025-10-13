@@ -1,11 +1,21 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Input from "./ui/Input";
 import RadioInput from "./ui/RadioInput";
 import Button from "../components/ui/Button";
+import { getAllCategories } from "../api/requests/productCategory";
 
 const FilterProducts = () => {
   const [brand, setBrand] = useState("");
   const [price, setPrice] = useState("");
+  const [allCategories, setAllCategories] = useState(null);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      const data = await getAllCategories();
+      console.log(data);
+    };
+    fetchCategories();
+  }, []);
 
   const handleReset = () => {
     setBrand("");
