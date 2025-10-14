@@ -5,11 +5,11 @@ import Button from "./ui/Button";
 export default function UserInformationTableRow({ user, onUpdate }) {
   const [isEditingName, setIsEditingName] = useState(false);
   const [isEditingEmail, setIsEditingEmail] = useState(false);
-  const [name, setName] = useState(user.name);
+  const [name, setName] = useState(user.username);
   const [email, setEmail] = useState(user.email);
 
   const handleSave = (field) => {
-    onUpdate(user.id, { [field]: field === "name" ? name : email });
+    onUpdate(user._id, { [field]: field === "name" ? name : email });
     if (field === "name") setIsEditingName(false);
     if (field === "email") setIsEditingEmail(false);
   };
@@ -17,7 +17,7 @@ export default function UserInformationTableRow({ user, onUpdate }) {
   return (
     <tr className="border-b border-gray-800 hover:bg-zinc-900 transition">
       {/* ID */}
-      <td className="text-center text-gray-400">{user.id}</td>
+      <td className="text-center text-gray-400">{user._id}</td>
 
       {/* نام */}
       <td className="text-center">
@@ -43,7 +43,7 @@ export default function UserInformationTableRow({ user, onUpdate }) {
               className="cursor-pointer text-gray-400 hover:text-white"
               onClick={() => setIsEditingName(true)}
             />
-            <span>{user.name}</span>
+            <span>{user.username}</span>
           </div>
         )}
       </td>
