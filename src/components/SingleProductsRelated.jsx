@@ -3,7 +3,7 @@ import UserHomeProductCard from "./UserHomeProductCard";
 import { getAllProducts } from "../api/requests/products";
 import toast from "react-hot-toast";
 
-export default function SingleProductsRelated({ productCategory, currentProduct }) {
+export default function SingleProductsRelated({ productCategory, product }) {
   const [allProducts, setAllProducts] = useState([]);
 
   useEffect(() => {
@@ -19,14 +19,19 @@ export default function SingleProductsRelated({ productCategory, currentProduct 
     fetchProducts();
   }, [productCategory]);
 
+  
+
   const filteredProductsByCategory = allProducts.filter(
     (item) => 
       item.category?._id === productCategory?._id &&
-      item.id !== currentProduct?.id
+      item._id !== product?._id
   );
 
+  console.log(filteredProductsByCategory);
+  
+
   return (
-    <div className="grid grid-cols-3 gap-7">
+    <div className="grid grid-cols-3 w-full gap-5">
       {filteredProductsByCategory.length > 0 ? (
         filteredProductsByCategory.map((product) => (
           <UserHomeProductCard key={product.id} product={product} />

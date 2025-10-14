@@ -8,7 +8,7 @@ export default function SingleProductDetails({product , productCategory}) {
   const [detailCategory, setDetailCategory] = useState("comment");
 
   return (
-    <section className="p-6 text-white bg-black w-2/3 mx-auto flex justify-between">
+    <section className="p-6 text-white bg-black w-2/3 mx-auto gap-3 flex justify-between">
       <div className="flex flex-col items-start  gap-5">
         <Button
           onClick={() => setDetailCategory("comment")}
@@ -36,10 +36,10 @@ export default function SingleProductDetails({product , productCategory}) {
         </Button>
       </div>
 
-      <div className="w-[70%]">
+      <div className="w-[85%]">
         {detailCategory === "comment" && <SingleProductsAddComment product={product} />}
         {detailCategory === "showComments" && <SingleProductsAllComments product={product} />}
-        {detailCategory === "related" && <SingleProductsRelated productCategory={productCategory} />}
+        {detailCategory === "related" && <SingleProductsRelated productCategory={productCategory} product={product} />}
       </div>
 
       <div></div>
