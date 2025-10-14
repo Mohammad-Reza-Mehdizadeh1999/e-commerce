@@ -16,6 +16,7 @@ import AdminCreateProductPage from "./pages/AdminCreateProductPage";
 import AdminAllOrders from "./pages/AdminAllOrders";
 import UserCheckout from "./pages/UserCheckout";
 import AdminProductPage from "./pages/AdminProductPage";
+import UserSingleOrder from "./pages/UserSingleOrder";
 
 function App() {
   return (
@@ -34,7 +35,7 @@ function App() {
           <Route path="user/checkout" element={<UserCheckout />} />
           <Route path="user/profile-edit" element={<UserProfileUpdate />} />
           <Route path="user/my-orders" element={<UserOrders />} />
-          <Route path="user/my-orders/:orderId" element={<UserOrders />} />
+          <Route path="user/my-orders/:orderId" element={<UserSingleOrder />} />
           <Route path="admin/dashboard" element={<AdminDashboard />} />
           <Route path="admin/all-users" element={<AdminAllUsersPage />} />
           <Route path="admin/create-product" element={<AdminCreateProductPage />} />

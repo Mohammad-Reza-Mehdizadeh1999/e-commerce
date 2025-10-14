@@ -6,10 +6,12 @@ const CheckoutDetails = ({
   email,
   address,
   howToPay,
+  isDelivered,
   price,
   tax,
   m,
   finalPrice,
+  isPaid,
 }) => {
   return (
     <div className="w-[25%] flex flex-col gap-6">
@@ -19,19 +21,21 @@ const CheckoutDetails = ({
         </h2>
         <div className="flex flex-col gap-4">
           <p className="text-[var(--button-primary)] font-bold text-sm">
-             <span className="text-[var(--color-pink-secondry)]">شماره سفارش : </span>
+            <span className="text-[var(--color-pink-secondry)]">
+              شماره سفارش :{" "}
+            </span>
             <span className="dark:text-[var(--color-white)] text-[var(--color-black)]">
               {OrderNumber}
             </span>
           </p>
           <p className="text-[var(--button-primary)] font-bold text-sm">
-             <span className="text-[var(--color-pink-secondry)]">نام : </span>{" "}
+            <span className="text-[var(--color-pink-secondry)]">نام : </span>{" "}
             <span className="dark:text-[var(--color-white)] text-[var(--color-black)]">
               {name}
             </span>
           </p>
           <p className="text-[var(--button-primary)] font-bold text-sm">
-             <span className="text-[var(--color-pink-secondry)]">ایمیل : </span>{" "}
+            <span className="text-[var(--color-pink-secondry)]">ایمیل : </span>{" "}
             <span className="dark:text-[var(--color-white)] text-[var(--color-black)]">
               {email}
             </span>
@@ -49,17 +53,20 @@ const CheckoutDetails = ({
             </span>
             <span className="dark:text-[var(--color-white)] text-[var(--color-black)]">
               {" "}
-              {howToPay}
+              درگاه پرداخت پاسارگاد
             </span>
           </p>
         </div>
       </div>
-      <div className="w-full dark:bg-[var(--color-bg-dark-primary)] bg-[var(--color-gray)] py-2 px-2 rounded-md border dark:border-[var(--color-gray-card)] ">
-        <p className="text-[var(--color-black)] dark:text-[var(--color-white)]">
-          Status
+      <div
+        className={`w-full  py-2 px-2 rounded-md ${
+          isPaid ? "bg-green-500 " : " bg-red-500"
+        } `}
+      >
+        <p className="text-[var(--color-black)] text-center dark:text-[var(--color-white)]">
+          {isPaid ? "ارسال شده" : "ارسال نشده"}
         </p>
       </div>
-      {/* 3 */}
 
       <div className="flex flex-col  gap-3">
         <h3 className="mb-4 text-[var(--color-black)] dark:text-[var(--color-white)] text-xl">
@@ -90,10 +97,12 @@ const CheckoutDetails = ({
           </span>
         </div>
       </div>
-      {/* 4 */}
-      <Button className="bg-[var(--color-pink-primary)] rounded-full py-2 px-8">
-        پرداخت
-      </Button>
+
+      {!isPaid && (
+        <Button className="bg-[var(--color-pink-primary)] rounded-full py-2 px-8 cursor-pointer hover:bg-pink-400">
+          پرداخت
+        </Button>
+      )}
     </div>
   );
 };

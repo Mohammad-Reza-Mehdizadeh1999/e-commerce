@@ -66,7 +66,7 @@ export default function OrdersTableRow({ order }) {
       </td>
 
       <td className="py-3">
-        <Button className="bg-pink-600 hover:bg-pink-700 text-white text-xs px-4 py-1 rounded-full cursor-pointer">
+        <Button to={`/user/my-orders/${order._id}`} className="bg-pink-600 hover:bg-pink-700 text-white text-xs px-4 py-1 rounded-full cursor-pointer">
           جزئیات
         </Button>
       </td>
