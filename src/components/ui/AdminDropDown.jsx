@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { FaChevronUp, FaChevronDown } from "react-icons/fa";
+import toast from "react-hot-toast";
+import { logOutUser } from "../../api/requests/logout";
 
 export default function AdminDropDown() {
   const [isOpen, setIsOpen] = useState(false);
@@ -13,6 +15,22 @@ export default function AdminDropDown() {
     { id: 4, title: "سفارشات", to: "/admin/orders" },
     { id: 6, title: "خروج از حساب", to: "/login" },
   ];
+
+
+    const handleDropDownClick = async (item) => {
+    if(item.title === "خروج از حساب"){
+      try{
+        const data = await logOutUser()
+        if(data.status === 200){
+          toast.success("با موفقیت از حساب خود خارج شدید")
+          localStorage.clear()
+        }
+        
+      } catch (err) {
+        toast.error("خروج از حساب با مشکل مواجه شد")
+      }
+    }
+  }
 
   return (
     <div
@@ -31,7 +49,9 @@ export default function AdminDropDown() {
             <Link
               key={item.id}
               to={item.to}
-              onClick={() => setIsOpen(false)}
+              onClick={() => {
+                handleDropDownClick(item)
+                setIsOpen(false)}}
               className={`block px-3 py-1.5 text-sm rounded-lg transition-colors ${
                 location.pathname === item.to
                   ? "bg-pink-900 text-pink-300"

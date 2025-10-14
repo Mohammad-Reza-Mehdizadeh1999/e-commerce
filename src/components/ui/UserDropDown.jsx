@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { FaChevronUp, FaChevronDown } from "react-icons/fa";
+import { logOutUser } from "../../api/requests/logout";
+import toast from "react-hot-toast";
 
 export default function UserDropDown() {
   const [isOpen, setIsOpen] = useState(false);
@@ -11,6 +13,23 @@ export default function UserDropDown() {
     { id: 2, title: "سفارشات من", to: "/user/my-orders" },
     { id: 3, title: "خروج از حساب", to: "/login" },
   ];
+
+  const handleDropDownClick = async (item) => {
+    if(item.title === "خروج از حساب"){
+      try{
+        const data = await logOutUser()
+        if(data.status === 200){
+          toast.success("با موفقیت از حساب خود خارج شدید")
+          localStorage.clear()
+        }
+        
+      } catch (err) {
+        toast.error("خروج از حساب با مشکل مواجه شد")
+      }
+
+    }
+    
+  }
 
   return (
     <div
@@ -28,6 +47,7 @@ export default function UserDropDown() {
         <div className="flex flex-col space-y-1">
           {menuItems.map((item) => (
             <Link
+              onClick={()=> handleDropDownClick(item)}
               key={item.id}
               to={item.to}
               className={`block px-3 py-1.5 text-sm rounded-lg transition-colors ${
