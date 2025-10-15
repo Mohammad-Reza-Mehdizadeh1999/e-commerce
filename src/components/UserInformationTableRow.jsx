@@ -1,6 +1,9 @@
 import { useState } from "react";
-import { FaCheck, FaTimes, FaTrash, FaEdit } from "react-icons/fa";
+import { FaCheck, FaTrash, FaEdit } from "react-icons/fa";
 import Button from "./ui/Button";
+import { FaExpeditedssl } from "react-icons/fa";
+import { changeUserRole } from "../api/requests/adminUsers";
+import toast from "react-hot-toast";
 
 export default function UserInformationTableRow({ user, onUpdate }) {
   const [isEditingName, setIsEditingName] = useState(false);
@@ -12,6 +15,20 @@ export default function UserInformationTableRow({ user, onUpdate }) {
     onUpdate(user._id, { [field]: field === "name" ? name : email });
     if (field === "name") setIsEditingName(false);
     if (field === "email") setIsEditingEmail(false);
+  };
+
+  const handleChangeUserRole = async (user) => {
+    try {
+      const data = await changeUserRole(user._id, { isAdmin: !user.isAdmin });
+      if(data.status === 200){
+        toast.success("تغییر نقش با موفقیت انجام شد")
+      }
+
+      onUpdate(user._id, { isAdmin: !user.isAdmin });
+
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -87,13 +104,19 @@ export default function UserInformationTableRow({ user, onUpdate }) {
       </td>
 
       {/* عملیات */}
-      <td className="py-3 text-center">
+      <td className="py-3 flex items-center gap-3 justify-center">
         <Button>
           <FaTrash
             size={17}
             className="text-red-400 cursor-pointer hover:text-red-500 hover:scale-110 transition duration-200"
           />
         </Button>
+        <FaExpeditedssl
+          onClick={() => handleChangeUserRole(user)}
+          title="تغییر سطح دسترسی"
+          size={18}
+          className="text-yellow-500 cursor-pointer hover:text-yellow-700 hover:scale-110 transition duration-200"
+        />
       </td>
     </tr>
   );

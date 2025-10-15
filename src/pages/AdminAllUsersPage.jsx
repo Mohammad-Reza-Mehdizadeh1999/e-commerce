@@ -7,7 +7,7 @@ export default function AdminAllUsersPage() {
   const [allUsers, setAllUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
-  const usersPerPage = 10;
+  const usersPerPage = 12;
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -55,7 +55,7 @@ export default function AdminAllUsersPage() {
 
   const handleUpdateUser = (id, updatedData) => {
     setAllUsers((prev) =>
-      prev.map((user) => (user.id === id ? { ...user, ...updatedData } : user))
+      prev.map((user) => (user._id === id ? { ...user, ...updatedData } : user))
     );
   };
 
