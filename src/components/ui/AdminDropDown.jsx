@@ -13,6 +13,7 @@ export default function AdminDropDown() {
     { id: 2, title: "محصول جدید", to: "/admin/create-product" },
     { id: 3, title: "مدیریت کاربران", to: "/admin/all-users" },
     { id: 4, title: "سفارشات", to: "/admin/orders" },
+    { id: 5, title: "محصولات", to: "admin/all-products" },
     { id: 6, title: "خروج از حساب", to: "/login" },
   ];
 
