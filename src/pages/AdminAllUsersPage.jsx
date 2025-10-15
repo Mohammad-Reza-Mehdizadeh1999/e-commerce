@@ -54,9 +54,15 @@ export default function AdminAllUsersPage() {
   };
 
   const handleUpdateUser = (id, updatedData) => {
+  if (updatedData === null) {
+    setAllUsers((prev) => prev.filter((user) => user._id !== id));
+  } else {
     setAllUsers((prev) =>
-      prev.map((user) => (user._id === id ? { ...user, ...updatedData } : user))
+      prev.map((user) =>
+        user._id === id ? { ...user, ...updatedData } : user
+      )
     );
+  }
   };
 
   return (
