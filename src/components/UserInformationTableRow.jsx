@@ -2,7 +2,7 @@ import { useState } from "react";
 import { FaCheck, FaTrash, FaEdit } from "react-icons/fa";
 import Button from "./ui/Button";
 import { FaExpeditedssl } from "react-icons/fa";
-import { changeUserRole, deleteUser } from "../api/requests/adminUsers";
+import { changeUserRole, deleteUser, updateUserInfo } from "../api/requests/adminUsers";
 import toast from "react-hot-toast";
 
 export default function UserInformationTableRow({ user, onUpdate }) {
@@ -11,10 +11,28 @@ export default function UserInformationTableRow({ user, onUpdate }) {
   const [name, setName] = useState(user.username);
   const [email, setEmail] = useState(user.email);
 
-  const handleSave = (field) => {
-    onUpdate(user._id, { [field]: field === "name" ? name : email });
-    if (field === "name") setIsEditingName(false);
-    if (field === "email") setIsEditingEmail(false);
+  const handleSave = async (field) => {
+    const updatedUser = {
+      username: name,
+      email: email,
+      isAdmin: user.isAdmin,
+    };
+
+    try {
+      const { status } = await updateUserInfo(user._id, updatedUser);
+
+      if (status === 200) {
+        toast.success("اطلاعات کاربر با موفقیت ویرایش شد");
+
+        onUpdate(user._id, updatedUser);
+
+        if (field === "name") setIsEditingName(false);
+        if (field === "email") setIsEditingEmail(false);
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("خطا در به‌روزرسانی اطلاعات کاربر");
+    }
   };
 
   const handleChangeUserRole = async (user) => {
@@ -22,31 +40,27 @@ export default function UserInformationTableRow({ user, onUpdate }) {
       const data = await changeUserRole(user._id, { isAdmin: !user.isAdmin });
       if (data.status === 200) {
         toast.success("تغییر نقش با موفقیت انجام شد");
+        onUpdate(user._id, { isAdmin: !user.isAdmin });
       }
-
-      onUpdate(user._id, { isAdmin: !user.isAdmin });
     } catch (error) {
       console.error(error);
+      toast.error("خطا در تغییر نقش");
     }
   };
 
-const handleDeleteUser = async (user) => {
-  try {
-    const data = await deleteUser(user._id);
-
-    if (data.status === 200) {
-      toast.success("کاربر با موفقیت حذف شد");
-      onUpdate(user._id, null);
+  const handleDeleteUser = async (user) => {
+    try {
+      const data = await deleteUser(user._id);
+      if (data.status === 200) {
+        toast.success("کاربر با موفقیت حذف شد");
+        onUpdate(user._id, null);
+      }
+    } catch (error) {
+      if (error.status === 400) toast.error("ادمین رو نمیتونی پاک کنی :)");
+      else toast.error("خطا در حذف کاربر");
+      console.error(error);
     }
-  } catch (error) {
-    if (error.status === 400) {
-      toast.error("ادمین رو نمیتونی پاک کنی :)");
-    } else {
-      toast.error("خطا در حذف کاربر");
-    }
-    console.error(error);
-  }
-};
+  };
 
   return (
     <tr className="border-b border-gray-800 hover:bg-zinc-900 transition">
