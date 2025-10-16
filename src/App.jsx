@@ -28,7 +28,7 @@ function App() {
           <Route path="register" element={<Register />} />
           <Route path="user/home" element={<UserHomePage />} />
           <Route path="products" element={<AllProducts />} />
-          <Route path="products/:productId" element={<SingleProduct />} />
+          <Route path="products/:productId/" element={<SingleProduct />} />
           <Route path="user/basket" element={<UserBasket />} />
           <Route path="user/favorites" element={<UserFavorites />} />
           <Route path="user/shop-progress" element={<UserShoppingProgress />} />
@@ -39,8 +39,9 @@ function App() {
           <Route path="admin/dashboard" element={<AdminDashboard />} />
           <Route path="admin/all-users" element={<AdminAllUsersPage />} />
           <Route path="admin/create-product" element={<AdminCreateProductPage />} />
+          <Route path="admin/products" element={<AdminProductPage />} />
+          <Route path="admin/products/edit/:productId" element={<AdminProductPage />} />
           <Route path="admin/orders" element={<AdminAllOrders />} />
-          <Route path="admin/all-products" element={<AdminProductPage />} />
         </Route>
       </Routes>
     </>

@@ -1,55 +1,205 @@
-import AdminProductCard from "../components/AdminProductCard";
+import { useEffect, useState } from "react";
+import { toast } from "react-hot-toast";
+import { useForm } from "react-hook-form";
+import { createProduct, uploadImage } from "../api/requests/adminCreateProduct";
+import { useParams } from "react-router-dom";
+import { getSingleProducts } from "../api/requests/singleProduct";
+import { getProductCategory } from "../api/requests/productCategory";
 
-const AdminProductPage = () => {
-  const products = [
-    {
-      id: 1,
-      name: "Apple iPhone 14 Pro",
-      date: "۳۱ مرداد ۱۴۰۳",
-      description:
-        "آیفون 14 پرو با نمایشگر 6.1 اینچی Super Retina XDR و تراشه A16 Bionic همراه با سیستم دوربین سه‌گانه و فناوری ProMotion عرضه شده است.",
-      price: "10,000,000",
-      image: "/phone1.webp",
-    },
-    {
-      id: 2,
-      name: "Apple iPhone 14 Pro",
-      date: "۳۱ مرداد ۱۴۰۳",
-      description:
-        "آیفون 14 پرو با نمایشگر 6.1 اینچی Super Retina XDR و تراشه A16 Bionic همراه با سیستم دوربین سه‌گانه و فناوری ProMotion عرضه شده است.",
-      price: "10,000,000",
-      image: "/phone2.webp",
-    },
-    {
-      id: 3,
-      name: "Apple iPhone 14 Pro",
-      date: "۳۱ مرداد ۱۴۰۳",
-      description:
-        "آیفون 14 پرو با نمایشگر 6.1 اینچی Super Retina XDR و تراشه A16 Bionic همراه با سیستم دوربین سه‌گانه و فناوری ProMotion عرضه شده است.",
-      price: "10,000,000",
-      image: "/phone3.jpg",
-    },
-    {
-      id: 4,
-      name: "Apple iPhone 14 Pro",
-      date: "۳۱ مرداد ۱۴۰۳",
-      description:
-        "آیفون 14 پرو با نمایشگر 6.1 اینچی Super Retina XDR و تراشه A16 Bionic همراه با سیستم دوربین سه‌گانه و فناوری ProMotion عرضه شده است.",
-      price: "10,000,000",
-      image: "/phone4.webp",
-    },
+export default function AdminCreateProductPage() {
+  const [imagePreview, setImagePreview] = useState(null);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [product, setProduct] = useState(null);
+  const [productCategory, setProductCategory] = useState(null);
 
-  ];
+  let { productId } = useParams();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await getSingleProducts(productId);
+        setProduct(data);
+        console.log(data);
+        if (data) {
+          const category = await getProductCategory(data.category);
+          console.log(data.category);
+
+          setProductCategory(category);
+        }
+      } catch (err) {
+        console.error("Error fetching product:", err);
+      }
+    };
+
+    if (productId) fetchData();
+  }, [productId]);
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit = async (data) => {
+    // try {
+    //   if (!selectedFile) {
+    //     toast.error("لطفاً عکس محصول را انتخاب کنید");
+    //     return;
+    //   }
+    //   const uploadResponse = await uploadImage(selectedFile);
+    //   const imageName = uploadResponse.image;
+    //   const productData = {
+    //     name: data.name,
+    //     price: Number(data.price),
+    //     category: data.category,
+    //     description: data.description,
+    //     quantity: Number(data.quantity),
+    //     image: imageName,
+    //   };
+    //   await createProduct(productData);
+    //   toast.success("✅ محصول با موفقیت ساخته شد!");
+    //   reset();
+    //   setSelectedFile(null);
+    //   setImagePreview(null);
+    // } catch (error) {
+    //   console.error(error);
+    //   toast.error("❌ خطایی در ساخت محصول رخ داد");
+    // }
+  };
+
+  const onError = (errors) => {
+    Object.values(errors).forEach((error) => toast.error(error.message));
+  };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    setSelectedFile(file);
+
+    const reader = new FileReader();
+    reader.onload = () => setImagePreview(reader.result);
+    reader.readAsDataURL(file);
+  };
 
   return (
-    <div className="min-h-screen p-8">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-7xl mx-auto">
-        {products.map((product) => (
-          <AdminProductCard key={product.id} {...product} />
-        ))}
-      </div>
-    </div>
-  );
-};
+    <form
+      className="flex flex-col min-h-screen items-center justify-center py-5"
+      onSubmit={handleSubmit(onSubmit, onError)}
+    >
+      <div className="flex flex-col w-[50%] justify-center gap-5 ">
+        <div className="font-semibold text-black dark:text-white">
+          محصول جدید
+        </div>
 
-export default AdminProductPage;
+        {imagePreview ? (
+          <div className="flex items-center justify-center">
+            <div className="relative">
+              <div
+                onClick={() => {
+                  setImagePreview(null);
+                  setSelectedFile(null);
+                }}
+                className="bg-red-600 absolute top-2 right-2 flex items-center justify-center w-[28px] h-[28px] cursor-pointer text-white font-bold rounded"
+              >
+                ×
+              </div>
+              <img
+                className="w-[800px] h-[480px] object-cover rounded-lg"
+                src={imagePreview}
+                alt="Preview"
+              />
+            </div>
+          </div>
+        ) : (
+          <label className="relative flex items-center justify-center border-2 border-dashed w-full border-gray-500 rounded-lg  h-32 cursor-pointer hover:border-gray-400 transition">
+            <p className="text-gray-500 pointer-events-none">آپلود عکس</p>
+            <input
+              type="file"
+              className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+              accept="image/*"
+              onChange={handleImageChange}
+            />
+          </label>
+        )}
+
+        <div className="flex flex-col gap-2">
+          <label className="text-black dark:text-white">نام</label>
+          <input
+            {...register("name", { required: "نام محصول را وارد کنید" })}
+            placeholder="نام محصول را وارد کنید"
+            className="p-2 border border-gray-500 rounded focus:outline-none focus:ring-2 focus:ring-pink-500"
+            type="text"
+          />
+        </div>
+
+        <div className="flex gap-7 w-full">
+          <div className="flex flex-col w-full gap-3">
+            <label className="text-black dark:text-white">قیمت</label>
+            <input
+              {...register("price", { required: "قیمت را وارد کنید" })}
+              className="p-2 border border-gray-500 rounded focus:outline-none focus:ring-2 focus:ring-pink-500"
+              placeholder="قیمت محصول را وارد کنید"
+              type="number"
+            />
+          </div>
+
+          <div className="flex flex-col w-full gap-3">
+            <label className="text-black dark:text-white">
+              دسته‌بندی / برند
+            </label>
+            <input
+              {...register("category", { required: "دسته‌بندی را وارد کنید" })}
+              className="p-2 border border-gray-500 rounded focus:outline-none focus:ring-2 focus:ring-pink-500"
+              placeholder="نام دسته‌بندی یا برند"
+              type="text"
+            />
+          </div>
+        </div>
+
+        <div className="flex flex-col gap-3">
+          <label className="text-black dark:text-white">توضیحات</label>
+          <textarea
+            {...register("description", {
+              required: "توضیحات محصول را وارد کنید",
+            })}
+            className="h-[143px] border border-gray-500 rounded p-2 focus:outline-none focus:ring-2 focus:ring-pink-500"
+            placeholder="توضیحات محصول را وارد کنید"
+          />
+        </div>
+
+        <div className="flex w-full gap-3">
+          <div className="flex flex-col w-full gap-3">
+            <label className="text-black dark:text-white">
+              تعداد قابل خرید
+            </label>
+            <input
+              {...register("quantity", {
+                required: "تعداد قابل خرید را وارد کنید",
+              })}
+              className="p-2 border border-gray-500 rounded focus:outline-none focus:ring-2 focus:ring-pink-500"
+              type="number"
+              placeholder="تعداد خرید را وارد کنید"
+            />
+          </div>
+
+          <div className="flex flex-col w-full gap-3">
+            <label className="text-black dark:text-white">موجودی</label>
+            <input
+              className="p-2 border border-gray-500 rounded focus:outline-none focus:ring-2 focus:ring-pink-500"
+              type="number"
+              placeholder="موجودی"
+            />
+          </div>
+        </div>
+
+        <button
+          type="submit"
+          className="bg-pink-600 hover:bg-pink-700 text-white rounded-lg py-2 transition"
+        >
+          ساخت محصول جدید
+        </button>
+      </div>
+    </form>
+  );
+}
