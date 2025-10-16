@@ -1,12 +1,16 @@
 import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { useForm } from "react-hook-form";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { getSingleProducts } from "../api/requests/singleProduct";
 import { getProductCategory } from "../api/requests/productCategory";
 import { createProduct, uploadImage } from "../api/requests/adminCreateProduct";
+import { deleteProduct } from "../api/requests/adminProductAction";
 
 export default function AdminUpdateProduct() {
+
+  const navigate = useNavigate()
+
   const [imagePreview, setImagePreview] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
   const [productCategory, setProductCategory] = useState(null);
@@ -59,8 +63,7 @@ export default function AdminUpdateProduct() {
   }, [productId, reset]);
 
   const onSubmit = async (data) => {
-    console.log("Submitted data:", data);
-    toast.success("اطلاعات محصول با موفقیت ثبت شد ✅");
+    
   };
 
   const onError = (errors) => {
@@ -77,8 +80,18 @@ export default function AdminUpdateProduct() {
     reader.readAsDataURL(file);
   };
 
-  const deleteproduct = (productId)=> {
-    console.log(productId);
+  const deleteproduct = async (productId)=> {
+    try {
+      const res = await deleteProduct(productId)
+      console.log(res);
+      if (res.status === 200) {
+        toast.success("محصول با موفقیت پاک شد")
+        navigate("/admin/products")
+      }
+      
+    } catch (error) {
+      toast.error(error)
+    }
     
   }
 
