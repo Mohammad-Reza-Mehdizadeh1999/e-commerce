@@ -1,205 +1,101 @@
 import { useEffect, useState } from "react";
-import { toast } from "react-hot-toast";
-import { useForm } from "react-hook-form";
-import { createProduct, uploadImage } from "../api/requests/adminCreateProduct";
-import { useParams } from "react-router-dom";
-import { getSingleProducts } from "../api/requests/singleProduct";
-import { getProductCategory } from "../api/requests/productCategory";
+import AdminProductCard from "../components/AdminProductCard";
+import { getAllProductsPagination } from "../api/requests/products";
+import toast from "react-hot-toast";
 
-export default function AdminCreateProductPage() {
-  const [imagePreview, setImagePreview] = useState(null);
-  const [selectedFile, setSelectedFile] = useState(null);
-  const [product, setProduct] = useState(null);
-  const [productCategory, setProductCategory] = useState(null);
-
-  let { productId } = useParams();
+const AdminProductPage = () => {
+  const [products, setProducts] = useState([]);
+  const [page, setPage] = useState(1);
+  const [size] = useState(6);
+  const [totalPages, setTotalPages] = useState(1);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchProducts = async () => {
+      setLoading(true);
       try {
-        const data = await getSingleProducts(productId);
-        setProduct(data);
-        console.log(data);
-        if (data) {
-          const category = await getProductCategory(data.category);
-          console.log(data.category);
+        const data = await getAllProductsPagination(size, page);
 
-          setProductCategory(category);
-        }
-      } catch (err) {
-        console.error("Error fetching product:", err);
+        setProducts(data.products);
+        setTotalPages(data.total || 1);
+      } catch (error) {
+        console.error("Error fetching products:", error);
+        toast.error("خطا در دریافت محصولات!");
+      } finally {
+        setLoading(false);
       }
     };
 
-    if (productId) fetchData();
-  }, [productId]);
+    fetchProducts();
+  }, [page, size]);
 
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm();
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="w-12 h-12 border-4 border-pink-500 border-t-transparent rounded-full animate-spin"></div>
+      </div>
+    );
+  }
 
-  const onSubmit = async (data) => {
-    // try {
-    //   if (!selectedFile) {
-    //     toast.error("لطفاً عکس محصول را انتخاب کنید");
-    //     return;
-    //   }
-    //   const uploadResponse = await uploadImage(selectedFile);
-    //   const imageName = uploadResponse.image;
-    //   const productData = {
-    //     name: data.name,
-    //     price: Number(data.price),
-    //     category: data.category,
-    //     description: data.description,
-    //     quantity: Number(data.quantity),
-    //     image: imageName,
-    //   };
-    //   await createProduct(productData);
-    //   toast.success("✅ محصول با موفقیت ساخته شد!");
-    //   reset();
-    //   setSelectedFile(null);
-    //   setImagePreview(null);
-    // } catch (error) {
-    //   console.error(error);
-    //   toast.error("❌ خطایی در ساخت محصول رخ داد");
-    // }
-  };
-
-  const onError = (errors) => {
-    Object.values(errors).forEach((error) => toast.error(error.message));
-  };
-
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-    setSelectedFile(file);
-
-    const reader = new FileReader();
-    reader.onload = () => setImagePreview(reader.result);
-    reader.readAsDataURL(file);
+  const handlePageChange = (newPage) => {
+    if (newPage >= 1 && newPage <= totalPages) setPage(newPage);
   };
 
   return (
-    <form
-      className="flex flex-col min-h-screen items-center justify-center py-5"
-      onSubmit={handleSubmit(onSubmit, onError)}
-    >
-      <div className="flex flex-col w-[50%] justify-center gap-5 ">
-        <div className="font-semibold text-black dark:text-white">
-          محصول جدید
-        </div>
+    <div className="min-h-screen p-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-7xl mx-auto">
+        {products.map((product) => (
+          <AdminProductCard key={product.id} {...product} />
+        ))}{" "}
+      </div>
 
-        {imagePreview ? (
-          <div className="flex items-center justify-center">
-            <div className="relative">
-              <div
-                onClick={() => {
-                  setImagePreview(null);
-                  setSelectedFile(null);
-                }}
-                className="bg-red-600 absolute top-2 right-2 flex items-center justify-center w-[28px] h-[28px] cursor-pointer text-white font-bold rounded"
+      {/* Pagination Controls */}
+      <div className="flex items-center justify-center gap-3 mt-10">
+        <button
+          onClick={() => handlePageChange(page - 1)}
+          disabled={page === 1}
+          className={`px-4 py-2 rounded-md border border-pink-600 transition-all ${
+            page === 1
+              ? "text-gray-500 border-gray-600 cursor-not-allowed"
+              : "hover:bg-pink-600 hover:text-white"
+          }`}
+        >
+          قبلی
+        </button>
+
+        <div className="flex gap-2">
+          {[...Array(totalPages)].map((_, index) => {
+            const pageNumber = index + 1;
+            return (
+              <button
+                key={index}
+                onClick={() => handlePageChange(pageNumber)}
+                className={`w-9 h-9 rounded-md text-sm font-medium transition-all ${
+                  page === pageNumber
+                    ? "bg-pink-600 text-white"
+                    : "bg-gray-800 text-gray-300 hover:bg-gray-700"
+                }`}
               >
-                ×
-              </div>
-              <img
-                className="w-[800px] h-[480px] object-cover rounded-lg"
-                src={imagePreview}
-                alt="Preview"
-              />
-            </div>
-          </div>
-        ) : (
-          <label className="relative flex items-center justify-center border-2 border-dashed w-full border-gray-500 rounded-lg  h-32 cursor-pointer hover:border-gray-400 transition">
-            <p className="text-gray-500 pointer-events-none">آپلود عکس</p>
-            <input
-              type="file"
-              className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-              accept="image/*"
-              onChange={handleImageChange}
-            />
-          </label>
-        )}
-
-        <div className="flex flex-col gap-2">
-          <label className="text-black dark:text-white">نام</label>
-          <input
-            {...register("name", { required: "نام محصول را وارد کنید" })}
-            placeholder="نام محصول را وارد کنید"
-            className="p-2 border border-gray-500 rounded focus:outline-none focus:ring-2 focus:ring-pink-500"
-            type="text"
-          />
-        </div>
-
-        <div className="flex gap-7 w-full">
-          <div className="flex flex-col w-full gap-3">
-            <label className="text-black dark:text-white">قیمت</label>
-            <input
-              {...register("price", { required: "قیمت را وارد کنید" })}
-              className="p-2 border border-gray-500 rounded focus:outline-none focus:ring-2 focus:ring-pink-500"
-              placeholder="قیمت محصول را وارد کنید"
-              type="number"
-            />
-          </div>
-
-          <div className="flex flex-col w-full gap-3">
-            <label className="text-black dark:text-white">
-              دسته‌بندی / برند
-            </label>
-            <input
-              {...register("category", { required: "دسته‌بندی را وارد کنید" })}
-              className="p-2 border border-gray-500 rounded focus:outline-none focus:ring-2 focus:ring-pink-500"
-              placeholder="نام دسته‌بندی یا برند"
-              type="text"
-            />
-          </div>
-        </div>
-
-        <div className="flex flex-col gap-3">
-          <label className="text-black dark:text-white">توضیحات</label>
-          <textarea
-            {...register("description", {
-              required: "توضیحات محصول را وارد کنید",
-            })}
-            className="h-[143px] border border-gray-500 rounded p-2 focus:outline-none focus:ring-2 focus:ring-pink-500"
-            placeholder="توضیحات محصول را وارد کنید"
-          />
-        </div>
-
-        <div className="flex w-full gap-3">
-          <div className="flex flex-col w-full gap-3">
-            <label className="text-black dark:text-white">
-              تعداد قابل خرید
-            </label>
-            <input
-              {...register("quantity", {
-                required: "تعداد قابل خرید را وارد کنید",
-              })}
-              className="p-2 border border-gray-500 rounded focus:outline-none focus:ring-2 focus:ring-pink-500"
-              type="number"
-              placeholder="تعداد خرید را وارد کنید"
-            />
-          </div>
-
-          <div className="flex flex-col w-full gap-3">
-            <label className="text-black dark:text-white">موجودی</label>
-            <input
-              className="p-2 border border-gray-500 rounded focus:outline-none focus:ring-2 focus:ring-pink-500"
-              type="number"
-              placeholder="موجودی"
-            />
-          </div>
+                {pageNumber}
+              </button>
+            );
+          })}
         </div>
 
         <button
-          type="submit"
-          className="bg-pink-600 hover:bg-pink-700 text-white rounded-lg py-2 transition"
+          onClick={() => handlePageChange(page + 1)}
+          disabled={page === totalPages}
+          className={`px-4 py-2 rounded-md border border-pink-600 transition-all ${
+            page === totalPages
+              ? "text-gray-500 border-gray-600 cursor-not-allowed"
+              : "hover:bg-pink-600 hover:text-white"
+          }`}
         >
-          ساخت محصول جدید
+          بعدی
         </button>
       </div>
-    </form>
+    </div>
   );
-}
+};
+
+export default AdminProductPage;

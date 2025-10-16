@@ -17,7 +17,7 @@ export default function AllProducts() {
       try {
         const data = await getAllProductsPagination(size, page);
         
-        setProducts(data.products || []);
+        setProducts(data.products);
         setTotalPages(data.total || 1); 
       } catch (error) {
         console.error("Error fetching products:", error);
