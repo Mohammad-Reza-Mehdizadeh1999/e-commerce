@@ -3,6 +3,7 @@ import CheckoutDetails from "../components/CheckoutDetails";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getUserSingleOrder } from "../api/requests/userOrders";
+import { makeOrderPaid } from "../api/requests/adminAllOrders";
 
 const AdminSingleOrderDetails = () => {
   const [userOrder, setUserOrder] = useState(null);
@@ -22,6 +23,20 @@ const AdminSingleOrderDetails = () => {
     if (orderId) fetchOrder();
   }, [orderId]);
 
+
+
+  const handleDelivere = async () => {
+    console.log("del");
+  };
+
+
+
+  const handlePay = async () => {
+    console.log("pay");
+    const res = await makeOrderPaid(userOrder._id);
+    console.log(res);
+  };
+
   if (!userOrder) {
     return (
       <div className="text-center text-white mt-20">
@@ -31,7 +46,7 @@ const AdminSingleOrderDetails = () => {
   }
 
   return (
-    <div className="flex min-h-screen gap-20 pr-20 mt-15 w-full">
+    <div className="flex min-h-screen justify-center gap-20 pr-36 mt-15 w-full">
       <div className="w-1/2 h-[20%] border border-gray-700 p-8">
         <table className="w-full text-sm text-gray-700 table-fixed p-5">
           <thead className="text-gray-900 dark:text-[var(--color-white)] border-b-1 border-gray-700x">
@@ -57,19 +72,42 @@ const AdminSingleOrderDetails = () => {
         </table>
       </div>
 
-      <CheckoutDetails
-        OrderNumber={userOrder._id}
-        name={userOrder.user?.username}
-        email={userOrder.user?.email}
-        address={userOrder.shippingAddress?.address}
-        howToPay={userOrder.isPaid ? "پرداخت شده" : "پرداخت نشده"}
-        price={userOrder.itemsPrice?.toLocaleString("fa-IR")}
-        tax={userOrder.taxPrice?.toLocaleString("fa-IR")}
-        m={userOrder.shippingPrice?.toLocaleString("fa-IR")}
-        finalPrice={userOrder.totalPrice?.toLocaleString("fa-IR")}
-        isDelivered={userOrder.isDelivered}
-        isPaid={userOrder.isPaid}
-      />
+      <div className="w-1/2">
+        <CheckoutDetails
+          OrderNumber={userOrder._id}
+          name={userOrder.user?.username}
+          email={userOrder.user?.email}
+          address={userOrder.shippingAddress?.address}
+          howToPay={userOrder.isPaid ? "پرداخت شده" : "پرداخت نشده"}
+          price={userOrder.itemsPrice?.toLocaleString("fa-IR")}
+          tax={userOrder.taxPrice?.toLocaleString("fa-IR")}
+          m={userOrder.shippingPrice?.toLocaleString("fa-IR")}
+          finalPrice={userOrder.totalPrice?.toLocaleString("fa-IR")}
+          isDelivered={userOrder.isDelivered}
+          isPaid={userOrder.isPaid}
+        />
+
+        <div className="mt-10 flex  justify-start items-start gap-3">
+          <button
+            onClick={() => handleDelivere()}
+            disabled={userOrder.isDelivered}
+            className={`bg-yellow-300 py-1.5 px-3 hover:bg-yellow-500  rounded-xl text-black ${
+              userOrder.isDelivered ? "cursor-not-allowed" : "cursor-pointer"
+            }`}
+          >
+            تغییر وضعیت ارسال
+          </button>
+          <button
+            onClick={() => handlePay()}
+            disabled={userOrder.isPaid}
+            className={`bg-blue-300 py-1.5 px-2.5 hover:bg-blue-500  rounded-xl text-black ${
+              userOrder.isPaid ? "cursor-not-allowed" : "cursor-pointer"
+            }`}
+          >
+            تغییر وضعیت پرداخت
+          </button>
+        </div>
+      </div>
     </div>
   );
 };
