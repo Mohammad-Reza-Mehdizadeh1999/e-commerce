@@ -2,8 +2,8 @@ import { Link } from "react-router-dom";
 
 const AdminOrdersTableRow = ({ order }) => {
   const { orderItems } = order;
-  const firstItem = orderItems[0]; // اولین محصول سفارش
-  const remainingCount = orderItems.length - 1; // تعداد باقی محصولات
+  const firstItem = orderItems[0]; 
+  const remainingCount = orderItems.length - 1; 
 
   const getPaymentStatusClasses = (status) => {
     switch (status) {
@@ -21,7 +21,7 @@ const AdminOrdersTableRow = ({ order }) => {
       case true:
         return "bg-green-600 text-white";
       case false:
-        return "bg-red-600 text-white";
+        return "bg-blue-600 text-white";
       default:
         return "bg-gray-500 text-white";
     }

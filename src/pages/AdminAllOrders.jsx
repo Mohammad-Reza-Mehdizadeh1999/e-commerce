@@ -4,6 +4,8 @@ import { getAllOrders } from "../api/requests/adminAllOrders";
 
 export default function AdminAllOrders() {
   const [allOrders, setAllOrders] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+  const ordersPerPage = 9;
 
   useEffect(() => {
     const fetchAllOrders = async () => {
@@ -17,6 +19,21 @@ export default function AdminAllOrders() {
     };
     fetchAllOrders();
   }, []);
+
+
+    const indexOfLastUser = currentPage * ordersPerPage;
+  const indexOfFirstUser = indexOfLastUser - ordersPerPage;
+  const currentOrders = allOrders.slice(indexOfFirstUser, indexOfLastUser);
+
+  const totalPages = Math.ceil(allOrders.length / ordersPerPage);
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) setCurrentPage((prev) => prev + 1);
+  };
+
+  const handlePrevPage = () => {
+    if (currentPage > 1) setCurrentPage((prev) => prev - 1);
+  };
 
   return (
     <div
@@ -46,12 +63,44 @@ export default function AdminAllOrders() {
             </thead>
 
             <tbody>
-              {allOrders.map((order) => (
+              {currentOrders.map((order) => (
                 <AdminOrdersTableRow key={order._id} order={order} />
               ))}
             </tbody>
           </table>
         </div>
+      </div>
+
+
+
+      <div className="flex justify-center items-center mt-10 gap-5">
+        <button
+          onClick={handlePrevPage}
+          disabled={currentPage === 1}
+          className={`px-3 py-1 rounded-md cursor-pointer ${
+            currentPage === 1
+              ? "bg-gray-700 cursor-not-allowed"
+              : "bg-gray-800 hover:bg-gray-700"
+          }`}
+        >
+          قبلی
+        </button>
+
+        <span className="text-gray-300">
+          صفحه {currentPage} از {totalPages}
+        </span>
+
+        <button
+          onClick={handleNextPage}
+          disabled={currentPage === totalPages}
+          className={`px-3 py-1 rounded-md cursor-pointer ${
+            currentPage === totalPages
+              ? "bg-gray-700 cursor-not-allowed"
+              : "bg-gray-800 hover:bg-gray-700"
+          }`}
+        >
+          بعدی
+        </button>
       </div>
     </div>
   );
