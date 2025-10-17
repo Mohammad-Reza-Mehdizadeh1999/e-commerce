@@ -22,7 +22,7 @@ const AdminProductCard = ({ name, date, description, price, image , _id }) => {
           </p>
 
           <div className="flex items-center justify-between">
-            <p className="font-bold mt-1">{price} تومان</p>
+            <p className="font-bold mt-1">{price.toLocaleString()} تومان</p>
             <button className="flex items-center justify-center gap-2 bg-pink-600 hover:bg-pink-700 text-white text-sm font-medium rounded-md px-4 py-2 w-fit mt-2 transition">
               مشاهده بیشتر <FaArrowLeft className="text-xs" />
             </button>
