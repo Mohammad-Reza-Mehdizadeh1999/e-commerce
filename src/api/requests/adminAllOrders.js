@@ -10,3 +10,9 @@ export const makeOrderPaid = async (id) => {
   const response = await api.put(`/orders/${id}/pay`);
   return response.data;
 };
+
+
+export const makeOrderDelivered  = async (id) => {
+  const response = await api.put(`/orders/${id}/deliver`);
+  return response.data;
+};

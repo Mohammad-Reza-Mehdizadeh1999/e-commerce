@@ -3,11 +3,18 @@ import CheckoutDetails from "../components/CheckoutDetails";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getUserSingleOrder } from "../api/requests/userOrders";
-import { makeOrderPaid } from "../api/requests/adminAllOrders";
+import {
+  makeOrderDelivered,
+  makeOrderPaid,
+} from "../api/requests/adminAllOrders";
+import toast from "react-hot-toast";
 
 const AdminSingleOrderDetails = () => {
+  
   const [userOrder, setUserOrder] = useState(null);
   const { orderId } = useParams();
+
+
 
   useEffect(() => {
     const fetchOrder = async () => {
@@ -25,17 +32,26 @@ const AdminSingleOrderDetails = () => {
 
 
 
+
   const handleDelivere = async () => {
-    console.log("del");
+    const res = await makeOrderDelivered(userOrder._id);
+    if (res) {
+      toast.success("وضعیت ارسال به ارسال شده تغییر کرد");
+    }
   };
+
 
 
 
   const handlePay = async () => {
-    console.log("pay");
     const res = await makeOrderPaid(userOrder._id);
-    console.log(res);
+    if (res) {
+      toast.success("وضعیت پرداخت به پرداخت شده تغییر کرد");
+    }
   };
+
+
+
 
   if (!userOrder) {
     return (
@@ -44,6 +60,8 @@ const AdminSingleOrderDetails = () => {
       </div>
     );
   }
+
+
 
   return (
     <div className="flex min-h-screen justify-center gap-20 pr-36 mt-15 w-full">
