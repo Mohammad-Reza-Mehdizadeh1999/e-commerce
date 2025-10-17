@@ -1,39 +1,23 @@
+import { useEffect, useState } from "react";
 import AdminOrdersTableRow from "../components/AdminOrdersTableRow";
-
-const orders = [
-  {
-    id: 1,
-    image: "/phone1.webp",
-    name: "Apple iPhone 14 Pro",
-    date: "۱۴۰۴/۰۴/۳۱",
-    user: "علی موسوی",
-    price: "999.00",
-    paymentStatus: "پرداخت شده",
-    shippingStatus: "در حال ارسال",
-  },
-  {
-    id: 2,
-    image: "/phone2.webp",
-    name: "Apple MacBook Air M2",
-    date: "۱۴۰۴/۰۴/۳۱",
-    user: "احمدی",
-    price: "999.00",
-    paymentStatus: "پرداخت نشده",
-    shippingStatus: "ارسال شده",
-  },
-  {
-    id: 3,
-    image: "/phone4.webp",
-    name: "Apple iPad Pro 12.9-inch",
-    date: "۱۴۰۴/۰۴/۳۱",
-    user: "سعادتی",
-    price: "999.00",
-    paymentStatus: "پرداخت نشده",
-    shippingStatus: "ارسال نشده",
-  },
-];
+import { getAllOrders } from "../api/requests/adminAllOrders";
 
 export default function AdminAllOrders() {
+  const [allOrders, setAllOrders] = useState([]);
+
+  useEffect(() => {
+    const fetchAllOrders = async () => {
+      try {
+        const res = await getAllOrders();
+        console.log("✅ Orders from backend:", res);
+        setAllOrders(res);
+      } catch (err) {
+        console.error("❌ Error fetching orders:", err);
+      }
+    };
+    fetchAllOrders();
+  }, []);
+
   return (
     <div
       className="min-h-screen p-8"
@@ -49,37 +33,21 @@ export default function AdminAllOrders() {
         >
           <table className="w-full text-center border-collapse">
             <thead>
-              <tr className="text-sm  border-[var(--color-table-border)]">
-                <th className="py-3 px-2 font-medium text-[var(--color-text-main)]">
-                  عکس
-                </th>
-                <th className="py-3 px-2 font-medium text-right text-[var(--color-text-main)]">
-                  نام محصول
-                </th>
-                <th className="py-3 px-2 font-medium text-[var(--color-text-main)]">
-                  تاریخ
-                </th>
-                <th className="py-3 px-2 font-medium text-[var(--color-text-main)]">
-                  کاربر
-                </th>
-                <th className="py-3 px-2 font-medium text-[var(--color-text-main)]">
-                  قیمت نهایی
-                </th>
-                <th className="py-3 px-2 font-medium text-[var(--color-text-main)]">
-                  پرداخت
-                </th>
-                <th className="py-3 px-2 font-medium text-[var(--color-text-main)]">
-                  ارسال
-                </th>
-                <th className="py-3 px-2 font-medium text-[var(--color-text-main)]">
-                  عملیات
-                </th>
+              <tr className="text-sm border-[var(--color-table-border)]">
+                <th className="py-3 px-2 font-medium">عکس</th>
+                <th className="py-3 px-2 font-medium text-right">نام محصول</th>
+                <th className="py-3 px-2 font-medium">تاریخ</th>
+                <th className="py-3 px-2 font-medium">کاربر</th>
+                <th className="py-3 px-2 font-medium">قیمت نهایی</th>
+                <th className="py-3 px-2 font-medium">پرداخت</th>
+                <th className="py-3 px-2 font-medium">ارسال</th>
+                <th className="py-3 px-2 font-medium">عملیات</th>
               </tr>
             </thead>
 
             <tbody>
-              {orders.map((order) => (
-                <AdminOrdersTableRow key={order.id} order={order} />
+              {allOrders.map((order) => (
+                <AdminOrdersTableRow key={order._id} order={order} />
               ))}
             </tbody>
           </table>

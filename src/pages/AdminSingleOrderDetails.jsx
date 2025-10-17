@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getUserSingleOrder } from "../api/requests/userOrders";
 
-const UserSingleOrder = () => {
+const AdminSingleOrderDetails = () => {
   const [userOrder, setUserOrder] = useState(null);
   const { orderId } = useParams();
 
@@ -74,4 +74,4 @@ const UserSingleOrder = () => {
   );
 };
 
-export default UserSingleOrder;
+export default AdminSingleOrderDetails;
