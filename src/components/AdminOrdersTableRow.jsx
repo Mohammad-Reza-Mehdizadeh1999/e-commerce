@@ -2,25 +2,25 @@ import { Link } from "react-router-dom";
 
 const AdminOrdersTableRow = ({ order }) => {
   const { orderItems } = order;
+  const firstItem = orderItems[0]; // اولین محصول سفارش
+  const remainingCount = orderItems.length - 1; // تعداد باقی محصولات
 
   const getPaymentStatusClasses = (status) => {
     switch (status) {
-      case "پرداخت شده":
+      case true:
         return "bg-green-600 text-white";
-      case "پرداخت نشده":
+      case false:
         return "bg-red-600 text-white";
       default:
         return "bg-gray-500 text-white";
     }
   };
 
-  const getShippingStatusClasses = (status) => {
+  const getDeliveryStatusClasses = (status) => {
     switch (status) {
-      case "در حال ارسال":
-        return "bg-blue-600 text-white";
-      case "ارسال شده":
+      case true:
         return "bg-green-600 text-white";
-      case "ارسال نشده":
+      case false:
         return "bg-red-600 text-white";
       default:
         return "bg-gray-500 text-white";
@@ -33,24 +33,22 @@ const AdminOrdersTableRow = ({ order }) => {
                  hover:bg-[var(--color-gray-card)] dark:hover:bg-gray-700"
     >
       <td className="py-4 px-2">
-        <div className="flex justify-center gap-2">
-          {orderItems.map((item) => (
-            <img
-              key={item._id}
-              src={item.image}
-              alt={item.name}
-              className="w-12 h-12 object-cover rounded"
-            />
-          ))}
-        </div>
+        <img
+          src={firstItem.image}
+          alt={firstItem.name}
+          className="w-12 h-12 object-cover rounded mx-auto"
+        />
       </td>
 
-      <td className="py-4 px-2 text-sm font-medium text-[var(--color-text-main)] text-right">
-        {orderItems.map((item) => (
-          <div key={item._id} className="truncate">
-            {item.name}
+      <td className="py-4 px-2 w-[180px] text-sm font-medium text-[var(--color-text-main)] text-right">
+        <div className="truncate max-w-[150px]" title={firstItem.name}>
+          {firstItem.name}
+        </div>
+        {remainingCount > 0 && (
+          <div className="text-xs text-gray-400 mt-1 whitespace-nowrap">
+            +{remainingCount} محصول دیگر
           </div>
-        ))}
+        )}
       </td>
 
       <td className="py-4 px-2 text-sm text-[var(--color-gray)] dark:text-gray-400">
@@ -62,26 +60,26 @@ const AdminOrdersTableRow = ({ order }) => {
       </td>
 
       <td className="py-4 px-2 text-sm font-semibold text-[var(--color-text-main)]">
-        ${order.totalPrice?.toFixed(2) || 0}
+        {order.totalPrice.toLocaleString()} تومان
       </td>
 
       <td className="py-4 px-2">
         <span
           className={`px-3 py-1 text-xs rounded-full inline-block font-medium ${getPaymentStatusClasses(
-            order.paymentStatus
+            order.isPaid
           )}`}
         >
-          {order.paymentStatus}
+          {order.isPaid ? "پرداخت شده" : "پرداخت نشده"}
         </span>
       </td>
 
       <td className="py-4 px-2">
         <span
-          className={`px-3 py-1 text-xs rounded-full inline-block font-medium ${getShippingStatusClasses(
-            order.shippingStatus
+          className={`px-3 py-1 text-xs rounded-full inline-block font-medium ${getDeliveryStatusClasses(
+            order.isDelivered
           )}`}
         >
-          {order.shippingStatus}
+          {order.isDelivered ? "ارسال شده" : "در حال ارسال"}
         </span>
       </td>
 

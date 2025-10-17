@@ -18,6 +18,7 @@ import UserCheckout from "./pages/UserCheckout";
 import AdminProductPage from "./pages/AdminProductPage";
 import UserSingleOrder from "./pages/UserSingleOrder";
 import AdminUpdateProduct from "./pages/AdminUpdateProduct";
+import AdminSingleOrderDetails from "./pages/AdminSingleOrderDetails";
 
 function App() {
   return (
@@ -43,7 +44,7 @@ function App() {
           <Route path="admin/products" element={<AdminProductPage />} />
           <Route path="admin/products/edit/:productId" element={<AdminUpdateProduct/>} />
           <Route path="admin/orders" element={<AdminAllOrders />} />
-          <Route path="admin/orders/:orderId" element={<AdminAllOrders />} />
+          <Route path="admin/orders/:orderId" element={<AdminSingleOrderDetails />} />
         </Route>
       </Routes>
     </>
