@@ -3,17 +3,20 @@ import { toast } from "react-hot-toast";
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
 import { getSingleProducts } from "../api/requests/singleProduct";
-import { getProductCategory } from "../api/requests/productCategory";
+import {
+  getAllCategories,
+  getProductCategory,
+} from "../api/requests/productCategory";
 import { createProduct, uploadImage } from "../api/requests/adminCreateProduct";
-import { deleteProduct } from "../api/requests/adminProductAction";
+import { deleteProduct, updateProduct } from "../api/requests/adminProductAction";
 
 export default function AdminUpdateProduct() {
-
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const [imagePreview, setImagePreview] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
   const [productCategory, setProductCategory] = useState(null);
+  const [allCategories, setAllCategories] = useState(null);
   const [loading, setLoading] = useState(true);
 
   const { productId } = useParams();
@@ -40,14 +43,18 @@ export default function AdminUpdateProduct() {
         if (!data) return;
 
         setImagePreview(data.image);
+        setSelectedFile(data.image)
 
         const category = await getProductCategory(data.category);
         setProductCategory(category?.name || data.category);
 
+        const allCatRes = await getAllCategories();
+        setAllCategories(allCatRes);
+
         reset({
           name: data.name,
           price: data.price,
-          category: category?.name || data.category,
+          category: category?._id || data.category, 
           description: data.description,
           quantity: data.quantity,
         });
@@ -62,9 +69,35 @@ export default function AdminUpdateProduct() {
     if (productId) fetchData();
   }, [productId, reset]);
 
-  const onSubmit = async (data) => {
-    
-  };
+
+
+const onSubmit = async (data) => {
+  try {
+    let imageUrl = selectedFile;
+
+    if (selectedFile instanceof File) {
+      const uploadRes = await uploadImage(selectedFile);
+      imageUrl = uploadRes.image || uploadRes.url || uploadRes;
+    }
+
+    const dataToUpdate = { ...data, image: imageUrl };
+
+    const updateRes = await updateProduct(productId, dataToUpdate);
+
+    if (updateRes) {
+      toast.success("محصول با موفقیت آپدیت شد ✅");
+      navigate("/admin/products");
+    } else {
+      toast.error("خطا در آپدیت محصول ❌");
+    }
+  } catch (err) {
+    console.error(err);
+    toast.error("خطا در آپلود یا بروزرسانی محصول ⚠️");
+  }
+};
+
+
+
 
   const onError = (errors) => {
     Object.values(errors).forEach((error) => toast.error(error.message));
@@ -80,23 +113,18 @@ export default function AdminUpdateProduct() {
     reader.readAsDataURL(file);
   };
 
-  const deleteproduct = async (productId)=> {
+  const deleteproduct = async (productId) => {
     try {
-      const res = await deleteProduct(productId)
+      const res = await deleteProduct(productId);
       console.log(res);
       if (res.status === 200) {
-        toast.success("محصول با موفقیت پاک شد")
-        navigate("/admin/products")
+        toast.success("محصول با موفقیت پاک شد");
+        navigate("/admin/products");
       }
-      
     } catch (error) {
-      toast.error(error)
+      toast.error(error);
     }
-    
-  }
-
-
-
+  };
 
   if (loading)
     return (
@@ -171,12 +199,15 @@ export default function AdminUpdateProduct() {
             <label className="text-black dark:text-white">
               دسته‌بندی / برند
             </label>
-            <input
+            <select
+              
               {...register("category", { required: "دسته‌بندی را وارد کنید" })}
-              className="p-2 border border-gray-500 rounded focus:outline-none focus:ring-2 focus:ring-pink-500"
-              placeholder="نام دسته‌بندی یا برند"
-              type="text"
-            />
+              className="text-white bg-black p-2 border border-gray-500 rounded focus:outline-none focus:ring-2 focus:ring-pink-500"
+            >
+              {allCategories.map((category) => {
+                return <option value={category._id}>{category.name}</option>;
+              })}
+            </select>
           </div>
         </div>
 
@@ -217,17 +248,14 @@ export default function AdminUpdateProduct() {
         </div>
 
         <div>
-          <button
-            
-            className="bg-green-500 hover:bg-green-600 p-1.5 cursor-pointer ml-2 text-white rounded-lg py-2 transition"
-          >
-             بروزرسانی محصول
+          <button className="bg-green-500 hover:bg-green-600 p-1.5 cursor-pointer ml-2 text-white rounded-lg py-2 transition">
+            بروزرسانی محصول
           </button>
           <button
-            onClick={()=> deleteproduct(productId)}
+            onClick={() => deleteproduct(productId)}
             className="bg-red-500 hover:bg-red-600 p-1.5 cursor-pointer text-white rounded-lg py-2 transition"
           >
-             حذف محصول
+            حذف محصول
           </button>
         </div>
       </div>
