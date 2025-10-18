@@ -11,15 +11,18 @@ export default function AllProducts() {
   const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(true);
 
+  //filter states
+  const [minPrice, setMinPrice] = useState("");
+  const [maxPrice, setMaxPrice] = useState("");
+
   useEffect(() => {
     const fetchProducts = async () => {
       setLoading(true);
       try {
         const data = await getAllProductsPagination(size, page);
-        
+
         setProducts(data.products);
-        setTotalPages(data.total || 1); 
-        
+        setTotalPages(data.total || 1);
       } catch (error) {
         console.error("Error fetching products:", error);
         toast.error("خطا در دریافت محصولات!");
@@ -46,9 +49,8 @@ export default function AllProducts() {
   return (
     <>
       <div className="min-h-screen flex  mt-3 bg-black text-white px-6 ">
-        <FilterProducts />
+        <FilterProducts setMinPrice={setMinPrice} setMaxPrice={setMaxPrice} minPrice={minPrice} maxPrice={maxPrice} setProducts={setProducts}/>
 
-        {/* لیست محصولات */}
         <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 ">
           {products.length > 0 ? (
             products.map((product) => (
