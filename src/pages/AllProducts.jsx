@@ -19,6 +19,7 @@ export default function AllProducts() {
         
         setProducts(data.products);
         setTotalPages(data.total || 1); 
+        
       } catch (error) {
         console.error("Error fetching products:", error);
         toast.error("خطا در دریافت محصولات!");

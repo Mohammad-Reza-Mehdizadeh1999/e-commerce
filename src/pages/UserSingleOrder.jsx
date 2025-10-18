@@ -31,7 +31,7 @@ const UserSingleOrder = () => {
   }
 
   return (
-    <div className="flex min-h-screen gap-20 pr-20 mt-15 w-full">
+    <div className="flex min-h-screen gap-20 pr-48 mt-15 ">
       <div className="w-1/2 h-[20%] border border-gray-700 p-8">
         <table className="w-full text-sm text-gray-700 table-fixed p-5">
           <thead className="text-gray-900 dark:text-[var(--color-white)] border-b-1 border-gray-700x">
@@ -57,19 +57,22 @@ const UserSingleOrder = () => {
         </table>
       </div>
 
-      <CheckoutDetails
-        OrderNumber={userOrder._id}
-        name={userOrder.user?.username}
-        email={userOrder.user?.email}
-        address={userOrder.shippingAddress?.address}
-        howToPay={userOrder.isPaid ? "پرداخت شده" : "پرداخت نشده"}
-        price={userOrder.itemsPrice?.toLocaleString("fa-IR")}
-        tax={userOrder.taxPrice?.toLocaleString("fa-IR")}
-        m={userOrder.shippingPrice?.toLocaleString("fa-IR")}
-        finalPrice={userOrder.totalPrice?.toLocaleString("fa-IR")}
-        isDelivered={userOrder.isDelivered}
-        isPaid={userOrder.isPaid}
-      />
+       <div className="w-1/2">
+        <CheckoutDetails
+          OrderNumber={userOrder._id}
+          name={userOrder.user?.username}
+          email={userOrder.user?.email}
+          address={userOrder.shippingAddress?.address}
+          howToPay={userOrder.isPaid ? "پرداخت شده" : "پرداخت نشده"}
+          price={userOrder.itemsPrice?.toLocaleString("fa-IR")}
+          tax={userOrder.taxPrice?.toLocaleString("fa-IR")}
+          m={userOrder.shippingPrice?.toLocaleString("fa-IR")}
+          finalPrice={userOrder.totalPrice?.toLocaleString("fa-IR")}
+          isDelivered={userOrder.isDelivered}
+          isPaid={userOrder.isPaid}
+        />
+
+      </div>
     </div>
   );
 };

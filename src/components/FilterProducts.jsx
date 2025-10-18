@@ -7,12 +7,12 @@ import { getAllCategories } from "../api/requests/productCategory";
 const FilterProducts = () => {
   const [brand, setBrand] = useState("");
   const [price, setPrice] = useState("");
-  const [allCategories, setAllCategories] = useState(null);
+  const [allCategories, setAllCategories] = useState([]);
 
   useEffect(() => {
     const fetchCategories = async () => {
       const data = await getAllCategories();
-      console.log(data);
+      setAllCategories(data);
     };
     fetchCategories();
   }, []);
@@ -21,6 +21,7 @@ const FilterProducts = () => {
     setBrand("");
     setPrice("");
   };
+  
 
   return (
     <div className="bg-[#111] text-white p-5 rounded-lg w-56 flex flex-col justify-center items-center space-y-7 h-1/2 mr-10">
@@ -28,28 +29,20 @@ const FilterProducts = () => {
         <button className="bg-black w-full py-2 rounded-full mb-3 font-semibold">
           فیلتر برند
         </button>
-        <div className="flex flex-col space-y-3 ps-3">
-          <RadioInput
-            label="Apple"
-            name="brand"
-            value="Apple"
-            checked={brand === "Apple"}
-            onChange={(e) => setBrand(e.target.value)}
-          />
-          <RadioInput
-            label="Microsoft"
-            name="brand"
-            value="Microsoft"
-            checked={brand === "Microsoft"}
-            onChange={(e) => setBrand(e.target.value)}
-          />
-          <RadioInput
-            label="Samsung"
-            name="brand"
-            value="Samsung"
-            checked={brand === "Samsung"}
-            onChange={(e) => setBrand(e.target.value)}
-          />
+        <div className="flex flex-col space-y-3 ps-3 h-[300px] overflow-y-scroll">
+          {allCategories.map((category) => {
+            return (
+              <div className="flex items-center gap-1.5" key={category._id}>
+                <input
+                  type="radio"
+                  name="brand"
+                  value={category._id}
+                  onChange={(e) => setBrand(e.target.value)}
+                />
+                <label>{category.name}</label>
+              </div>
+            );
+          })}
         </div>
       </div>
 
