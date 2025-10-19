@@ -10,7 +10,6 @@ const SingleProductInformation = ({ product, productCategory }) => {
   const {addToFav} = useFavContext()
 
   const handleFavorites = (product) => {
-    console.log(product);
     addToFav(product);
     
   }

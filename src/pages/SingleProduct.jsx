@@ -17,10 +17,8 @@ export default function SingleProduct() {
       try {
         const data = await getSingleProducts(productId);
         setProduct(data);
-        console.log(data);
         if(data){
           const category = await getProductCategory(data.category)
-          console.log(data.category);
           
           setProductCategory(category)
           
