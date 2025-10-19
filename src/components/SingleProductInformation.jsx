@@ -7,11 +7,11 @@ import { useFavContext } from "../context/useFavContext";
 
 const SingleProductInformation = ({ product, productCategory }) => {
 
-  const {addTofav} = useFavContext()
+  const {addToFav} = useFavContext()
 
   const handleFavorites = (product) => {
     console.log(product);
-    addTofav(product);
+    addToFav(product);
     
   }
 

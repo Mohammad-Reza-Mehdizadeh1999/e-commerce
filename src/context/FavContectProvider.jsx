@@ -2,36 +2,33 @@ import { useState, useEffect } from "react";
 import { FavContext } from "./FavContext";
 
 const FavProvider = ({ children }) => {
-  const [fav, setfav] = useState([]);
+    
+  const [fav, setFav] = useState(() => {
+    const saved = localStorage.getItem("FavContext");
+    return saved ? JSON.parse(saved) : [];
+  });
 
-  const addTofav = (product) => {
-    setfav((prev) => [...prev, product]);
+  const addToFav = (product) => {
+    setFav((prev) => [...prev, product]);
   };
 
-  const removeFromfav = (id) => {
-    setfav((prev) => prev.filter((item) => item.id !== id));
+  const removeFromFav = (id) => {
+    setFav((prev) => prev.filter((item) => item.id !== id));
   };
 
-  const clearfav = () => setfav([]);
+  const clearFav = () => setFav([]);
 
   useEffect(() => {
     localStorage.setItem("FavContext", JSON.stringify(fav));
   }, [fav]);
 
-  useEffect(() => {
-    const saved = localStorage.getItem("FavContext");
-    if (saved) {
-      setfav(JSON.parse(saved));
-    }
-  }, []);
-
   return (
     <FavContext.Provider
       value={{
         fav,
-        addTofav,
-        removeFromfav,
-        clearfav,
+        addToFav,
+        removeFromFav,
+        clearFav,
       }}
     >
       {children}

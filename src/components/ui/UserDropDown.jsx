@@ -3,8 +3,12 @@ import { Link, useLocation } from "react-router-dom";
 import { FaChevronUp, FaChevronDown } from "react-icons/fa";
 import { logOutUser } from "../../api/requests/logout";
 import toast from "react-hot-toast";
+import { useFavContext } from "../../context/useFavContext";
 
 export default function UserDropDown() {
+
+  const {clearFav} = useFavContext();
+
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
 
@@ -21,6 +25,7 @@ export default function UserDropDown() {
         if(data.status === 200){
           toast.success("با موفقیت از حساب خود خارج شدید")
           localStorage.clear()
+          clearFav();
         }
         
       } catch (err) {
