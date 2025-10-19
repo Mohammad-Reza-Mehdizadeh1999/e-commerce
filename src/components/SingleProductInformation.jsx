@@ -1,4 +1,3 @@
-import React from "react";
 import { FaStar, FaRegHeart } from "react-icons/fa";
 import { BsInfoCircle, BsShopWindow } from "react-icons/bs";
 import { FiShoppingCart } from "react-icons/fi";
@@ -6,6 +5,14 @@ import { CiShoppingBasket } from "react-icons/ci";
 import StarRating from "./ui/StarRating";
 
 const SingleProductInformation = ({ product, productCategory }) => {
+
+  const handleFavorites = (product) => {
+    console.log(product);
+    
+  }
+
+
+
   return (
     <div className="flex flex-col md:flex-row justify-between items-center bg-black text-white rounded-2xl p-6 md:p-10 gap-10">
       <div className="w-full md:w-1/2 flex justify-center">
@@ -25,7 +32,7 @@ const SingleProductInformation = ({ product, productCategory }) => {
             className="pl-5 text-gray-400 hover:text-pink-500 transition cursor-pointer"
             title="Add to favorites"
           >
-            <FaRegHeart size={22} />
+            <FaRegHeart size={22}  onClick={()=>handleFavorites(product)}/>
           </button>
         </div>
 
