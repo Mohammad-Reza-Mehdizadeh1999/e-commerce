@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { favContext } from "./favContext";
+import { FavContext } from "./FavContext";
 
 const FavProvider = ({ children }) => {
   const [fav, setfav] = useState([]);
@@ -15,18 +15,18 @@ const FavProvider = ({ children }) => {
   const clearfav = () => setfav([]);
 
   useEffect(() => {
-    localStorage.setItem("favContext", JSON.stringify(fav));
+    localStorage.setItem("FavContext", JSON.stringify(fav));
   }, [fav]);
 
   useEffect(() => {
-    const saved = localStorage.getItem("favContext");
+    const saved = localStorage.getItem("FavContext");
     if (saved) {
       setfav(JSON.parse(saved));
     }
   }, []);
 
   return (
-    <favContext.Provider
+    <FavContext.Provider
       value={{
         fav,
         addTofav,
@@ -35,7 +35,7 @@ const FavProvider = ({ children }) => {
       }}
     >
       {children}
-    </favContext.Provider>
+    </FavContext.Provider>
   );
 };
 

@@ -1,4 +1,4 @@
 import { useContext } from "react";
-import { favContext } from "./favContext";
+import { FavContext } from "./FavContext";
 
-export const useFavContext = () => useContext(favContext);
+export const useFavContext = () => useContext(FavContext);

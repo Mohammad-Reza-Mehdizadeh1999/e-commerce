@@ -3,11 +3,15 @@ import { BsInfoCircle, BsShopWindow } from "react-icons/bs";
 import { FiShoppingCart } from "react-icons/fi";
 import { CiShoppingBasket } from "react-icons/ci";
 import StarRating from "./ui/StarRating";
+import { useFavContext } from "../context/useFavContext";
 
 const SingleProductInformation = ({ product, productCategory }) => {
 
+  const {addTofav} = useFavContext()
+
   const handleFavorites = (product) => {
     console.log(product);
+    addTofav(product);
     
   }
 
