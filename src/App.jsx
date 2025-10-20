@@ -20,6 +20,7 @@ import UserSingleOrder from "./pages/UserSingleOrder";
 import AdminUpdateProduct from "./pages/AdminUpdateProduct";
 import AdminSingleOrderDetails from "./pages/AdminSingleOrderDetails";
 import PrivateRoute from "./layouts/PrivateRoute";
+import NotFound from "./pages/NotFound";
 
 function App() {
   return (
@@ -30,7 +31,7 @@ function App() {
           <Route index element={<Login />} />
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
-          <Route path="user/home" element={<UserHomePage />} />
+          <Route path="home" element={<UserHomePage />} />
           <Route path="products" element={<AllProducts />} />
           <Route path="products/:productId/" element={<SingleProduct />} />
           <Route path="user/basket" element={<PrivateRoute><UserBasket /></PrivateRoute>} />

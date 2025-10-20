@@ -12,7 +12,7 @@ export default function RightSidebar() {
   let isAdmin = localStorage.getItem("isAdmin");
 
   const navItemsTop = [
-    { id: "user/home", title: "صفحه اصلی", icon: <FiHome size={20} /> },
+    { id: "/home", title: "صفحه اصلی", icon: <FiHome size={20} /> },
     { id: "products", title: "فروشگاه", icon: <CiShop size={23} /> },
     {
       id: "user/basket",

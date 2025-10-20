@@ -9,7 +9,7 @@ export default function PrivateRoute({ children, adminOnly = false }) {
   }
 
   if (adminOnly && !isAdmin) {
-    return <Navigate to="/" replace />;
+    return <Navigate to="/not-found" replace />;
   }
 
   return children;
