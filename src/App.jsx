@@ -19,33 +19,42 @@ import AdminProductPage from "./pages/AdminProductPage";
 import UserSingleOrder from "./pages/UserSingleOrder";
 import AdminUpdateProduct from "./pages/AdminUpdateProduct";
 import AdminSingleOrderDetails from "./pages/AdminSingleOrderDetails";
+import PrivateRoute from "./layouts/PrivateRoute";
 
 function App() {
   return (
     <>
       <Routes>
         <Route path="/" element={<MainLayout />}>
+
           <Route index element={<Login />} />
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
           <Route path="user/home" element={<UserHomePage />} />
           <Route path="products" element={<AllProducts />} />
           <Route path="products/:productId/" element={<SingleProduct />} />
-          <Route path="user/basket" element={<UserBasket />} />
+          <Route path="user/basket" element={<PrivateRoute><UserBasket /></PrivateRoute>} />
           <Route path="user/favorites" element={<UserFavorites />} />
-          <Route path="user/shop-progress" element={<UserShoppingProgress />} />
-          <Route path="user/checkout" element={<UserCheckout />} />
-          <Route path="user/profile-edit" element={<UserProfileUpdate />} />
-          <Route path="user/my-orders" element={<UserOrders />} />
-          <Route path="user/my-orders/:orderId" element={<UserSingleOrder />} />
-          <Route path="admin/dashboard" element={<AdminDashboard />} />
-          <Route path="admin/all-users" element={<AdminAllUsersPage />} />
-          <Route path="admin/create-product" element={<AdminCreateProductPage />} />
-          <Route path="admin/products" element={<AdminProductPage />} />
-          <Route path="admin/products/edit/:productId" element={<AdminUpdateProduct/>} />
-          <Route path="admin/orders" element={<AdminAllOrders />} />
-          <Route path="admin/orders/:orderId" element={<AdminSingleOrderDetails />} />
-        </Route>
+          <Route path="user/shop-progress" element={<PrivateRoute><UserShoppingProgress /></PrivateRoute>} />
+          <Route path="user/checkout" element={<PrivateRoute><UserCheckout /></PrivateRoute>} />
+          <Route path="user/profile-edit" element={<PrivateRoute><UserProfileUpdate /></PrivateRoute>} />
+          <Route path="user/my-orders" element={<PrivateRoute><UserOrders /></PrivateRoute>} />
+          <Route path="user/my-orders/:orderId" element={<PrivateRoute><UserSingleOrder /></PrivateRoute>} />
+
+
+          <Route path="admin/dashboard" element={<PrivateRoute adminOnly><AdminDashboard /></PrivateRoute>} />
+          <Route path="admin/all-users" element={<PrivateRoute adminOnly><AdminAllUsersPage /></PrivateRoute>} />
+          <Route path="admin/create-product" element={<PrivateRoute adminOnly><AdminCreateProductPage /></PrivateRoute>} />
+          <Route path="admin/products" element={<PrivateRoute adminOnly><AdminProductPage /></PrivateRoute>} />
+          <Route path="admin/products/edit/:productId" element={<PrivateRoute adminOnly><AdminUpdateProduct/></PrivateRoute>} />
+          <Route path="admin/orders" element={<PrivateRoute adminOnly><AdminAllOrders /></PrivateRoute>} />
+          <Route path="admin/orders/:orderId" element={<PrivateRoute adminOnly><AdminSingleOrderDetails /></PrivateRoute>}/>
+          <Route path="*" element={<PrivateRoute adminOnly><AdminSingleOrderDetails /></PrivateRoute>}/>
+
+          <Route path="not-found" element={<NotFound />} />
+          <Route path="*" element={<NotFound />} />
+
+      </Route>
       </Routes>
     </>
   );

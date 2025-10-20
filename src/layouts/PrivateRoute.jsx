@@ -1,0 +1,16 @@
+import { Navigate } from "react-router-dom";
+
+export default function PrivateRoute({ children, adminOnly = false }) {
+  const isAdmin = localStorage.getItem("isAdmin") === "true";
+  const isLoggedIn = localStorage.getItem("id");
+
+  if (!isLoggedIn) {
+    return <Navigate to="/login" replace />;
+  }
+
+  if (adminOnly && !isAdmin) {
+    return <Navigate to="/" replace />;
+  }
+
+  return children;
+}
