@@ -19,7 +19,6 @@ export default function NotFound() {
         لطفاً به صفحه اصلی برگرد.
       </p>
 
-      {/* دکمه برگشت */}
       <Link
         to="/home"
         className="mt-8 bg-pink-600 z-20 hover:bg-pink-700 transition-all text-white px-6 py-3 rounded-xl font-medium shadow-lg hover:shadow-pink-500/30 animate-float"
@@ -27,7 +26,6 @@ export default function NotFound() {
         بازگشت به صفحه اصلی
       </Link>
 
-      {/* افکت پس‌زمینه در گوشه پایین */}
       <div className="absolute bottom-10 right-10 w-[150px] h-[150px] bg-pink-400/10 rounded-full blur-2xl animate-pulse"></div>
     </div>
   );

@@ -29,7 +29,7 @@ const Login = () => {
       }
       if(res.status === 200){
         toast.success(`خوش آمدید ${res.data.username} 🙂`);
-        navigate("/user/home");
+        navigate("/home");
       }
     } catch (err) {
       toast.error("خطا در ورود :( لطفاً مجدداً تلاش کنید");

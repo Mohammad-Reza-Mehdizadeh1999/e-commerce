@@ -1,4 +1,4 @@
-import { FaStar, FaRegHeart } from "react-icons/fa";
+import { FaStar, FaRegHeart, FaHeart } from "react-icons/fa";
 import { BsInfoCircle, BsShopWindow } from "react-icons/bs";
 import { FiShoppingCart } from "react-icons/fi";
 import { CiShoppingBasket } from "react-icons/ci";
@@ -7,14 +7,14 @@ import { useFavContext } from "../context/useFavContext";
 
 const SingleProductInformation = ({ product, productCategory }) => {
 
-  const {addToFav} = useFavContext()
+  const { addToFav, fav } = useFavContext();
 
   const handleFavorites = (product) => {
     addToFav(product);
-    
-  }
+  };
 
-
+  const isInFav = fav.some((item) => item._id === product?._id);
+  console.log(isInFav);
 
   return (
     <div className="flex flex-col md:flex-row justify-between items-center bg-black text-white rounded-2xl p-6 md:p-10 gap-10">
@@ -35,7 +35,15 @@ const SingleProductInformation = ({ product, productCategory }) => {
             className="pl-5 text-gray-400 hover:text-pink-500 transition cursor-pointer"
             title="Add to favorites"
           >
-            <FaRegHeart size={22}  onClick={()=>handleFavorites(product)}/>
+            {isInFav ? (
+              <FaHeart
+                className="text-pink-500"
+                size={22}
+                onClick={() => handleFavorites(product)}
+              />
+            ) : (
+              <FaRegHeart size={22} onClick={() => handleFavorites(product)} />
+            )}
           </button>
         </div>
 
@@ -82,7 +90,9 @@ const SingleProductInformation = ({ product, productCategory }) => {
 
         <div className="flex items-center gap-2 mt-4">
           <StarRating rating={product.rating || 0} />
-          <span className="text-gray-400 text-sm">{product.numReviews} نظر </span>
+          <span className="text-gray-400 text-sm">
+            {product.numReviews} نظر{" "}
+          </span>
         </div>
 
         <div className="flex items-center gap-4 mt-6">
