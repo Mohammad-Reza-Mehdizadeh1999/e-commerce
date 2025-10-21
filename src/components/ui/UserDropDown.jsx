@@ -4,10 +4,12 @@ import { FaChevronUp, FaChevronDown } from "react-icons/fa";
 import { logOutUser } from "../../api/requests/logout";
 import toast from "react-hot-toast";
 import { useFavContext } from "../../context/useFavContext";
+import { useCartContext } from "../../context/useCartContext";
 
 export default function UserDropDown() {
 
   const {clearFav} = useFavContext();
+  const {clearCart} = useCartContext();
 
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
@@ -26,6 +28,7 @@ export default function UserDropDown() {
           toast.success("با موفقیت از حساب خود خارج شدید")
           localStorage.clear()
           clearFav();
+          clearCart()
         }
         
       } catch (err) {

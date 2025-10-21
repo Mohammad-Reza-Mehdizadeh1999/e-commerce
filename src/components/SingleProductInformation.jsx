@@ -4,17 +4,30 @@ import { FiShoppingCart } from "react-icons/fi";
 import { CiShoppingBasket } from "react-icons/ci";
 import StarRating from "./ui/StarRating";
 import { useFavContext } from "../context/useFavContext";
+import { useCartContext } from "../context/useCartContext";
+import { useState } from "react";
 
 const SingleProductInformation = ({ product, productCategory }) => {
 
+  const [productQt , setProductQt] = useState(1)
+
   const { addToFav, fav } = useFavContext();
+  const { addToCart } = useCartContext();
 
   const handleFavorites = (product) => {
     addToFav(product);
   };
 
+
+  const handleAddToCart = (product) => {
+    const cartProduct = {...product , quantity : productQt}
+    addToCart(cartProduct)
+    console.log(cartProduct);
+    
+  }
+  
+
   const isInFav = fav.some((item) => item._id === product?._id);
-  console.log(isInFav);
 
   return (
     <div className="flex flex-col md:flex-row justify-between items-center bg-black text-white rounded-2xl p-6 md:p-10 gap-10">
@@ -96,14 +109,14 @@ const SingleProductInformation = ({ product, productCategory }) => {
         </div>
 
         <div className="flex items-center gap-4 mt-6">
-          <select className="bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-white focus:outline-none">
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
+          <select value={productQt} onChange={(e)=> setProductQt(e.target.value)}  className="bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-white focus:outline-none">
+            <option value={1}>1</option>
+            <option value={2}>2</option>
+            <option value={3}>3</option>
+            <option value={4}>4</option>
+            <option value={5}>5</option>
           </select>
-          <button className="bg-pink-600 hover:bg-pink-700 transition text-white px-6 py-2 rounded-xl font-medium">
+          <button onClick={()=> handleAddToCart(product)} className="bg-pink-600 hover:bg-pink-700 transition text-white px-6 py-2 rounded-xl font-medium">
             افزودن به سبد خرید
           </button>
         </div>
