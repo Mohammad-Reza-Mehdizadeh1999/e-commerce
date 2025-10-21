@@ -4,7 +4,8 @@ import { getProductCategory } from "../api/requests/productCategory";
 import { useCartContext } from "../context/useCartContext";
 
 const BasketItem = ({ card }) => {
-  const { removeFromCart } = useCartContext();
+  const { removeFromCart, increaseQuantity, decreaseQuantity } =
+    useCartContext();
 
   const [category, setCategory] = useState("");
 
@@ -23,6 +24,8 @@ const BasketItem = ({ card }) => {
   const handelDeleteFromCart = (id) => {
     removeFromCart(id);
   };
+
+
 
   return (
     <div className="flex items-center justify-between border-b border-[var(--color-pink-primary)] pb-4">
@@ -49,11 +52,13 @@ const BasketItem = ({ card }) => {
             viewBox="0 0 24 24"
             fill="currentColor"
             className="cursor-pointer inline"
-            onClick={() => {}}
+            onClick={() => increaseQuantity(card._id)}
           >
             <polygon points="12,6 6,14 18,14" />
           </svg>
+
           <span>{card.quantity}</span>
+
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="16"
@@ -61,7 +66,7 @@ const BasketItem = ({ card }) => {
             viewBox="0 0 24 24"
             fill="currentColor"
             className="cursor-pointer inline"
-            onClick={() => {}}
+            onClick={() => decreaseQuantity(card._id)}
           >
             <polygon points="6,10 18,10 12,18" />
           </svg>

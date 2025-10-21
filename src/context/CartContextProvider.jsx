@@ -7,15 +7,50 @@ const CartProvider = ({ children }) => {
     return saved ? JSON.parse(saved) : [];
   });
 
+
+
   const addToCart = (product) => {
     setCart((prev) => [...prev, product]);
   };
+
+
 
   const removeFromCart = (id) => {
     setCart((prev) => prev.filter((item) => item._id !== id));
   };
 
+
+
+
+  const increaseQuantity = (id) => {
+    setCart((prev) =>
+      prev.map((item) =>
+        item._id === id
+          ? { ...item, quantity: Number(item.quantity) + 1 }
+          : item
+      )
+    );
+  };
+
+
+
+
+  const decreaseQuantity = (id) => {
+    setCart((prev) =>
+      prev.map((item) =>
+        item._id === id && item.quantity > 1
+          ? { ...item, quantity: Number(item.quantity) - 1 }
+          : item
+      )
+    );
+  };
+
+
+
+
   const clearCart = () => setCart([]);
+
+
 
   useEffect(() => {
     localStorage.setItem("cartContext", JSON.stringify(cart));
@@ -35,6 +70,8 @@ const CartProvider = ({ children }) => {
         addToCart,
         removeFromCart,
         clearCart,
+        increaseQuantity,
+        decreaseQuantity,
       }}
     >
       {children}
