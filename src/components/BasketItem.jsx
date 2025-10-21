@@ -1,5 +1,6 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { FaRegTrashAlt } from "react-icons/fa";
+import { getProductCategory } from "../api/requests/productCategory";
 
 
 const BasketItem = ({
@@ -9,10 +10,23 @@ const BasketItem = ({
   onDelete,
 }) => {
 
+  const [category , setCategory] = useState("")
 
   useEffect(()=>{
+
+    const fetchCategory = async ()=> {
+      try {
+        const categoryRes = await getProductCategory(card.category)
+        setCategory(categoryRes)
+        
+      } catch (error) {
+        console.error(error)
+      }
+    }
+    fetchCategory()
     
-  })
+
+  } , [card.category])
 
   return (
     <div className="flex items-center justify-between border-b border-[var(--color-pink-primary)] pb-4">
@@ -23,8 +37,8 @@ const BasketItem = ({
           className="w-full max-w-[88px] h-[100px] rounded"
         />
         <div className="flex flex-col gap-3">
-          <div className="text-[var(--color-pink-secondry)] w-full">{title}</div>
-          <div>{card.name}</div>
+          <div className="text-[var(--color-pink-primary)] w-full">{card.name}</div>
+          <div>{category.name}</div>
           <div>{card.price.toLocaleString()} تومان </div>
         </div>
       </div>
