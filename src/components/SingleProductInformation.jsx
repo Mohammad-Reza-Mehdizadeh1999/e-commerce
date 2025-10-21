@@ -6,6 +6,7 @@ import StarRating from "./ui/StarRating";
 import { useFavContext } from "../context/useFavContext";
 import { useCartContext } from "../context/useCartContext";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 const SingleProductInformation = ({ product, productCategory }) => {
 
@@ -22,8 +23,7 @@ const SingleProductInformation = ({ product, productCategory }) => {
   const handleAddToCart = (product) => {
     const cartProduct = {...product , quantity : productQt}
     addToCart(cartProduct)
-    console.log(cartProduct);
-    
+    toast.success("محصول به سبد خرید اضافه شد")    
   }
   
 

@@ -4,10 +4,7 @@ import { getProductCategory } from "../api/requests/productCategory";
 
 
 const BasketItem = ({
-  card,
-  onIncrement,
-  onDecrement,
-  onDelete,
+  card
 }) => {
 
   const [category , setCategory] = useState("")
@@ -51,7 +48,7 @@ const BasketItem = ({
             viewBox="0 0 24 24"
             fill="currentColor"
             className="cursor-pointer inline"
-            onClick={onIncrement}
+            onClick={()=>{}}
           >
             <polygon points="12,6 6,14 18,14" />
           </svg>
@@ -63,12 +60,12 @@ const BasketItem = ({
             viewBox="0 0 24 24"
             fill="currentColor"
             className="cursor-pointer inline"
-            onClick={onDecrement}
+            onClick={()=>{}}
           >
             <polygon points="6,10 18,10 12,18" />
           </svg>
         </span>
-        <FaRegTrashAlt onClick={onDelete} className="inline cursor-pointer h-[16px] w-[14px] text-[var(--color-pink-secondry)] hover:scale-115 transition-transform duration-200" />
+        <FaRegTrashAlt onClick={()=>{}} className="inline cursor-pointer h-[16px] w-[14px] text-[var(--color-pink-secondry)] hover:scale-115 transition-transform duration-200" />
 
       </div>
     </div>
