@@ -1,29 +1,28 @@
 import { useEffect, useState } from "react";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { getProductCategory } from "../api/requests/productCategory";
+import { useCartContext } from "../context/useCartContext";
 
+const BasketItem = ({ card }) => {
+  const { removeFromCart } = useCartContext();
 
-const BasketItem = ({
-  card
-}) => {
+  const [category, setCategory] = useState("");
 
-  const [category , setCategory] = useState("")
-
-  useEffect(()=>{
-
-    const fetchCategory = async ()=> {
+  useEffect(() => {
+    const fetchCategory = async () => {
       try {
-        const categoryRes = await getProductCategory(card.category)
-        setCategory(categoryRes)
-        
+        const categoryRes = await getProductCategory(card.category);
+        setCategory(categoryRes);
       } catch (error) {
-        console.error(error)
+        console.error(error);
       }
-    }
-    fetchCategory()
-    
+    };
+    fetchCategory();
+  }, [card.category]);
 
-  } , [card.category])
+  const handelDeleteFromCart = (id) => {
+    removeFromCart(id);
+  };
 
   return (
     <div className="flex items-center justify-between border-b border-[var(--color-pink-primary)] pb-4">
@@ -34,7 +33,9 @@ const BasketItem = ({
           className="w-full max-w-[88px] h-[100px] rounded"
         />
         <div className="flex flex-col gap-3">
-          <div className="text-[var(--color-pink-primary)] w-full">{card.name}</div>
+          <div className="text-[var(--color-pink-primary)] w-full">
+            {card.name}
+          </div>
           <div>{category.name}</div>
           <div>{card.price.toLocaleString()} تومان </div>
         </div>
@@ -48,7 +49,7 @@ const BasketItem = ({
             viewBox="0 0 24 24"
             fill="currentColor"
             className="cursor-pointer inline"
-            onClick={()=>{}}
+            onClick={() => {}}
           >
             <polygon points="12,6 6,14 18,14" />
           </svg>
@@ -60,13 +61,15 @@ const BasketItem = ({
             viewBox="0 0 24 24"
             fill="currentColor"
             className="cursor-pointer inline"
-            onClick={()=>{}}
+            onClick={() => {}}
           >
             <polygon points="6,10 18,10 12,18" />
           </svg>
         </span>
-        <FaRegTrashAlt onClick={()=>{}} className="inline cursor-pointer h-[16px] w-[14px] text-[var(--color-pink-secondry)] hover:scale-115 transition-transform duration-200" />
-
+        <FaRegTrashAlt
+          onClick={() => handelDeleteFromCart(card._id)}
+          className="inline cursor-pointer h-[16px] w-[14px] text-[var(--color-pink-secondry)] hover:scale-115 transition-transform duration-200"
+        />
       </div>
     </div>
   );

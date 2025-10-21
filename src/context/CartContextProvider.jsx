@@ -12,7 +12,7 @@ const CartProvider = ({ children }) => {
   };
 
   const removeFromCart = (id) => {
-    setCart((prev) => prev.filter((item) => item.id !== id));
+    setCart((prev) => prev.filter((item) => item._id !== id));
   };
 
   const clearCart = () => setCart([]);
