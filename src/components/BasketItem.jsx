@@ -1,27 +1,31 @@
+import { useEffect } from "react";
 import { FaRegTrashAlt } from "react-icons/fa";
 
 
 const BasketItem = ({
   card,
-  count,
   onIncrement,
   onDecrement,
   onDelete,
 }) => {
-  const { src, title, cost, brand } = card;
+
+
+  useEffect(()=>{
+    
+  })
 
   return (
     <div className="flex items-center justify-between border-b border-[var(--color-pink-primary)] pb-4">
-      <div className="flex items-center gap-2 w-1/2">
+      <div className="flex items-center gap-3 w-1/2">
         <img
-          src={src}
-          alt={title}
+          src={card.image}
+          alt={card.name}
           className="w-full max-w-[88px] h-[100px] rounded"
         />
-        <div className="flex flex-col gap-1.5">
+        <div className="flex flex-col gap-3">
           <div className="text-[var(--color-pink-secondry)] w-full">{title}</div>
-          <div>{brand}</div>
-          <div>{cost}</div>
+          <div>{card.name}</div>
+          <div>{card.price.toLocaleString()} تومان </div>
         </div>
       </div>
       <div className="flex items-center gap-[16px]">
@@ -37,7 +41,7 @@ const BasketItem = ({
           >
             <polygon points="12,6 6,14 18,14" />
           </svg>
-          <span>{count}</span>
+          <span>{card.quantity}</span>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="16"

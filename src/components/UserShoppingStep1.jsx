@@ -1,4 +1,4 @@
-import Input from "./UI/Input";
+import Input from "./ui/Input";
 
 const UserShoppingStep1 = ({
   handleAddressChange,

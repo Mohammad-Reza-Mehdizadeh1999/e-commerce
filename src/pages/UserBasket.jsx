@@ -1,6 +1,7 @@
 import { useState } from "react";
 import BasketItem from "../components/BasketItem";
-import Button from "../components/UI/Button";
+import Button from "../components/ui/Button";
+import { useCartContext } from "../context/useCartContext";
 
 
 
@@ -25,6 +26,9 @@ const [cards, setCards] = useState([
     cost: 11000,
   },
 ]);
+
+  const { addToCart , cart } = useCartContext();
+
 
 
   const [counts, setCounts] = useState(cards.map(() => 0));
@@ -56,7 +60,7 @@ const [cards, setCards] = useState([
   return (
     <div className="mt-[120px] mx-[285px] min-h-screen">
       <div className="flex flex-col gap-4">
-        {cards.map((card, index) => (
+        {cart.map((card, index) => (
           <BasketItem
             key={index}
             card={card}
