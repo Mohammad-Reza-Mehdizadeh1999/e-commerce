@@ -22,6 +22,15 @@ export default function UserBasket() {
 
   }
 
+
+  if(cart.length === 0){
+    return (
+      <div className="flex justify-center min-h-screen mt-24">
+        <h2 className="text-lg text-pink-500">سبد خرید شما خالی است</h2>
+      </div>
+    );
+  }
+
   return (
     <div className="mt-[120px] mx-[285px] min-h-screen">
       <div className="flex flex-col gap-4">

@@ -1,14 +1,47 @@
+import toast from "react-hot-toast";
+import { makeOrder } from "../api/requests/userOrders";
 import { useCartContext } from "../context/useCartContext";
 import ShoppingProgressTableRow from "./ShoppingProgressTableRow";
 import Button from "./ui/Button";
+import { useNavigate } from "react-router-dom";
 
-const UserShoppingStep2 = ({ address, city, country, postcode }) => {
+const UserShoppingStep2 = ({ address, city, postcode }) => {
 
-  const { cart , checkoutInfo } = useCartContext();
+  const navigate = useNavigate();
 
-  console.log(cart);
-  
+  const { cart, checkoutInfo , clearCart } = useCartContext();
+
   const shippingCost = 10000;
+
+  const handleCompleteOrder = async () => {
+    const orderItems = cart.map((item) => ({
+      _id: item._id,
+      name: item.name,
+      qty: Number(item.quantity),
+    }));
+
+    const orderData = {
+      orderItems,
+      paymentMethod: "Cash",
+      shippingAddress: {
+        address,
+        city,
+        postalCode: postcode,
+      },
+    };
+
+
+    try {
+      const response = await makeOrder(orderData);
+      toast.success("سفارش با موفقیت ثبت شد!");
+      clearCart();
+      navigate("/user/my-orders")
+
+    } catch (error) {
+      console.error("❌ Error making order:", error);
+      toast.error("مشکلی در ثبت سفارش پیش آمد!");
+    }
+  };
 
   return (
     <div className="flex flex-col  min-h-screen items-center gap-3">
@@ -50,7 +83,6 @@ const UserShoppingStep2 = ({ address, city, country, postcode }) => {
                 price={item.price}
               />
             ))}
-
           </tbody>
         </table>
       </div>
@@ -79,19 +111,28 @@ const UserShoppingStep2 = ({ address, city, country, postcode }) => {
 
             <div className="flex justify-between">
               <div>مالیات:</div>
-              <div>{(checkoutInfo.totalPrice * 0.1).toLocaleString()} تومان</div>
+              <div>
+                {(checkoutInfo.totalPrice * 0.1).toLocaleString()} تومان
+              </div>
             </div>
 
             <div className="flex justify-between font-bold">
               <div>مبلغ نهایی:</div>
-              <div>{(checkoutInfo.totalPrice + shippingCost + (checkoutInfo.totalPrice * 0.1)).toLocaleString()} تومان</div>
+              <div>
+                {(
+                  checkoutInfo.totalPrice +
+                  shippingCost +
+                  checkoutInfo.totalPrice * 0.1
+                ).toLocaleString()}{" "}
+                تومان
+              </div>
             </div>
           </div>
         </div>
         <Button
-          className="rounded-2xl h-[48px] bg-[#DB2777] text-white"
+          className="rounded-2xl h-[48px] bg-pink-500 text-white cursor-pointer hover:bg-pink-600"
           type="button"
-          onClick={() => alert("Clicked!")}
+          onClick={() => handleCompleteOrder()}
         >
           ثبت سفارش
         </Button>
