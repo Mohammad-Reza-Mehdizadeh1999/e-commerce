@@ -38,7 +38,7 @@ const UserShoppingProgress = () => {
           postcode={postcode}
         />
       )}
-      {step === 2 && <UserShoppingStep2 />}
+      {step === 2 && <UserShoppingStep2 address={address} city={city} country={country} postcode={postcode} />}
     </>
   );
 };

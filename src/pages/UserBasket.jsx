@@ -1,15 +1,27 @@
 import { useCartContext } from "../context/useCartContext";
 import BasketItem from "../components/BasketItem";
 import Button from "../components/ui/Button";
+import { useNavigate } from "react-router-dom";
 
 export default function UserBasket() {
-  const { cart } = useCartContext();
+
+  const navigate = useNavigate();
+
+  const { cart , setCart } = useCartContext();
 
   const totalCount = cart.reduce((sum, item) => sum + Number(item.quantity), 0);
   const totalPrice = cart.reduce(
     (sum, item) => sum + Number(item.price) * Number(item.quantity),
     0
   );
+
+  const handleClickToShopProgress = () => {
+
+    navigate("/user/shop-progress");
+
+    setCart((prev)=> ({ ...prev , totalPrice: totalPrice , totalCount: totalCount }))
+
+  }
 
   return (
     <div className="mt-[120px] mx-[285px] min-h-screen">
@@ -23,9 +35,9 @@ export default function UserBasket() {
         <div>تعداد کل محصولات: ({totalCount})</div>
         <div>جمع کل قیمت: {totalPrice.toLocaleString()} تومان</div>
 
-        <Button className="text-[var(--color-white)] bg-[var(--color-pink-secondry)] py-[8px] px-[32px] cursor-pointer w-[608px] h-[48px] rounded-full mt-2">
+        <button onClick={()=> handleClickToShopProgress()}  className="text-[var(--color-white)] text-center bg-[var(--color-pink-secondry)] py-[8px] px-[32px] cursor-pointer w-[608px]  rounded-full mt-2">
           تکمیل خرید
-        </Button>
+        </button>
       </div>
     </div>
   );

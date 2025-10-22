@@ -1,7 +1,15 @@
+import { useCartContext } from "../context/useCartContext";
 import ShoppingProgressTableRow from "./ShoppingProgressTableRow";
-import Button from "./UI/Button";
+import Button from "./ui/Button";
 
-const UserShoppingStep2 = () => {
+const UserShoppingStep2 = ({ address, city, country, postcode }) => {
+
+  const { cart } = useCartContext();
+
+  console.log(cart);
+  
+  const shippingCost = 10000;
+
   return (
     <div className="flex flex-col  min-h-screen items-center gap-3">
       <div className="flex justify-center items-center gap-4 mt-[60px]">
@@ -33,24 +41,16 @@ const UserShoppingStep2 = () => {
             </tr>
           </thead>
           <tbody className="text-gray-400">
-            <ShoppingProgressTableRow
-              image="/phone1.webp"
-              name="Apple iPhone 14 Pro"
-              quantity={1}
-              price={999.0}
-            />
-            <ShoppingProgressTableRow
-              image="/phone2.webp"
-              name="Apple iPhone 14 Pro"
-              quantity={2}
-              price={999.0}
-            />
-            <ShoppingProgressTableRow
-              image="/phone4.webp"
-              name="Apple iPhone 14 Pro"
-              quantity={2}
-              price={999.0}
-            />
+            {cart.map((item, index) => (
+              <ShoppingProgressTableRow
+                key={index}
+                image={item.image}
+                name={item.name}
+                quantity={item.quantity}
+                price={item.price}
+              />
+            ))}
+
           </tbody>
         </table>
       </div>
@@ -64,27 +64,27 @@ const UserShoppingStep2 = () => {
           </div>
           <div className="flex flex-col gap-3">
             <h2>آدرس دریافت</h2>
-            <p>آدرس: تهران خ آزادی نبش کوچه قنبری پلاک 192</p>
+            <p>آدرس: {address}</p>
           </div>
           <div className="flex  w-[20%]  flex-col gap-1.5">
             <div className="flex justify-between ">
               <div>قیمت محصولات:</div>
-              <div>۱۰۰۰۰۰ تومان</div>
+              <div>{cart.totalPrice.toLocaleString()} تومان</div>
             </div>
 
             <div className="flex justify-between">
               <div>هزینه ارسال:</div>
-              <div>۱۰۰۰۰ تومان</div>
+              <div>{shippingCost.toLocaleString()} تومان</div>
             </div>
 
             <div className="flex justify-between">
               <div>مالیات:</div>
-              <div>۱۰۰۰۰۰ تومان</div>
+              <div>{(cart.totalPrice * 0.1).toLocaleString()} تومان</div>
             </div>
 
             <div className="flex justify-between font-bold">
               <div>مبلغ نهایی:</div>
-              <div>۱۰۰۰۰۰ تومان</div>
+              <div>{(cart.totalPrice + shippingCost + (cart.totalPrice * 0.1)).toLocaleString()} تومان</div>
             </div>
           </div>
         </div>

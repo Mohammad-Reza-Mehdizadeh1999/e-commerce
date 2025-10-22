@@ -50,7 +50,6 @@ function App() {
           <Route path="admin/products/edit/:productId" element={<PrivateRoute adminOnly><AdminUpdateProduct/></PrivateRoute>} />
           <Route path="admin/orders" element={<PrivateRoute adminOnly><AdminAllOrders /></PrivateRoute>} />
           <Route path="admin/orders/:orderId" element={<PrivateRoute adminOnly><AdminSingleOrderDetails /></PrivateRoute>}/>
-          <Route path="*" element={<PrivateRoute adminOnly><AdminSingleOrderDetails /></PrivateRoute>}/>
 
           <Route path="not-found" element={<NotFound />} />
           <Route path="*" element={<NotFound />} />
