@@ -4,7 +4,7 @@ import Button from "./ui/Button";
 
 const UserShoppingStep2 = ({ address, city, country, postcode }) => {
 
-  const { cart } = useCartContext();
+  const { cart , checkoutInfo } = useCartContext();
 
   console.log(cart);
   
@@ -69,7 +69,7 @@ const UserShoppingStep2 = ({ address, city, country, postcode }) => {
           <div className="flex  w-[20%]  flex-col gap-1.5">
             <div className="flex justify-between ">
               <div>قیمت محصولات:</div>
-              <div>{cart.totalPrice.toLocaleString()} تومان</div>
+              <div>{checkoutInfo.totalPrice.toLocaleString()} تومان</div>
             </div>
 
             <div className="flex justify-between">
@@ -79,12 +79,12 @@ const UserShoppingStep2 = ({ address, city, country, postcode }) => {
 
             <div className="flex justify-between">
               <div>مالیات:</div>
-              <div>{(cart.totalPrice * 0.1).toLocaleString()} تومان</div>
+              <div>{(checkoutInfo.totalPrice * 0.1).toLocaleString()} تومان</div>
             </div>
 
             <div className="flex justify-between font-bold">
               <div>مبلغ نهایی:</div>
-              <div>{(cart.totalPrice + shippingCost + (cart.totalPrice * 0.1)).toLocaleString()} تومان</div>
+              <div>{(checkoutInfo.totalPrice + shippingCost + (checkoutInfo.totalPrice * 0.1)).toLocaleString()} تومان</div>
             </div>
           </div>
         </div>

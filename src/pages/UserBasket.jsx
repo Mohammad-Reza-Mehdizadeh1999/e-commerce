@@ -1,13 +1,12 @@
 import { useCartContext } from "../context/useCartContext";
 import BasketItem from "../components/BasketItem";
-import Button from "../components/ui/Button";
 import { useNavigate } from "react-router-dom";
 
 export default function UserBasket() {
 
   const navigate = useNavigate();
 
-  const { cart , setCart } = useCartContext();
+  const { cart , setCheckoutInfo } = useCartContext();
 
   const totalCount = cart.reduce((sum, item) => sum + Number(item.quantity), 0);
   const totalPrice = cart.reduce(
@@ -16,10 +15,10 @@ export default function UserBasket() {
   );
 
   const handleClickToShopProgress = () => {
-
+    
+    setCheckoutInfo({ totalPrice: totalPrice , totalCount: totalCount })
     navigate("/user/shop-progress");
 
-    setCart((prev)=> ({ ...prev , totalPrice: totalPrice , totalCount: totalCount }))
 
   }
 

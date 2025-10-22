@@ -1,6 +1,7 @@
 import { useState } from "react";
 import UserShoppingStep1 from "../components/UserShoppingStep1";
 import UserShoppingStep2 from "../components/UserShoppingStep2";
+import { useCartContext } from "../context/useCartContext";
 const UserShoppingProgress = () => {
   const [step, setStep] = useState(1);
 
@@ -22,6 +23,7 @@ const UserShoppingProgress = () => {
   const handlePostcodeChange = (e) => {
     setPostcode(e.target.value);
   };
+  
   return (
     <>
       {step === 1 && (

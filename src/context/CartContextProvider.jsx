@@ -7,7 +7,7 @@ const CartProvider = ({ children }) => {
     return saved ? JSON.parse(saved) : [];
   });
 
-
+  const [checkoutInfo, setCheckoutInfo] = useState({ totalPrice: 0, totalCount: 0 });
 
   const addToCart = (product) => {
     setCart((prev) => [...prev, product]);
@@ -67,7 +67,8 @@ const CartProvider = ({ children }) => {
     <CartContext.Provider
       value={{
         cart,
-        setCart,
+        checkoutInfo,
+        setCheckoutInfo,
         addToCart,
         removeFromCart,
         clearCart,
