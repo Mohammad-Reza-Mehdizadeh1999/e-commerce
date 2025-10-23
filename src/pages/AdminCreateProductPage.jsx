@@ -1,11 +1,26 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { useForm } from "react-hook-form";
 import { createProduct, uploadImage } from "../api/requests/adminCreateProduct";
+import { getAllCategories } from "../api/requests/productCategory";
 
 export default function AdminCreateProductPage() {
   const [imagePreview, setImagePreview] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const data = await getAllCategories();
+        setCategories(data);
+      } catch (error) {
+        console.error("خطا در دریافت دسته‌بندی‌ها:", error);
+        toast.error("❌ خطا در دریافت دسته‌بندی‌ها");
+      }
+    };
+    fetchCategories();
+  }, []);
 
   const {
     register,
@@ -30,7 +45,7 @@ export default function AdminCreateProductPage() {
         category: data.category,
         description: data.description,
         quantity: Number(data.quantity),
-        image: imageName, 
+        image: imageName,
       };
 
       await createProduct(productData);
@@ -123,13 +138,22 @@ export default function AdminCreateProductPage() {
           </div>
 
           <div className="flex flex-col w-full gap-3">
-            <label className="text-black dark:text-white">دسته‌بندی / برند</label>
-            <input
-              {...register("category", { required: "دسته‌بندی را وارد کنید" })}
-              className="p-2 border border-gray-500 rounded focus:outline-none focus:ring-2 focus:ring-pink-500"
-              placeholder="نام دسته‌بندی یا برند"
-              type="text"
-            />
+            <label className="font-semibold text-black dark:text-white">
+              دسته‌بندی
+            </label>
+            <select
+              {...register("category", {
+                required: "دسته‌بندی را انتخاب کنید",
+              })}
+              className="p-2 bg-white dark:bg-black dark:text-white border border-gray-500 rounded-[8px] focus:outline-none focus:ring-3 focus:ring-[var(--color-pink-primary)]"
+            >
+              <option value="">یک دسته‌بندی انتخاب کنید</option>
+              {categories?.map((cat) => (
+                <option key={cat._id} value={cat._id}>
+                  {cat.name}
+                </option>
+              ))}
+            </select>
           </div>
         </div>
 
@@ -146,7 +170,9 @@ export default function AdminCreateProductPage() {
 
         <div className="flex w-full gap-3">
           <div className="flex flex-col w-full gap-3">
-            <label className="text-black dark:text-white">تعداد قابل خرید</label>
+            <label className="text-black dark:text-white">
+              تعداد قابل خرید
+            </label>
             <input
               {...register("quantity", {
                 required: "تعداد قابل خرید را وارد کنید",
