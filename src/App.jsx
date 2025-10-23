@@ -35,7 +35,7 @@ function App() {
           <Route path="products" element={<AllProducts />} />
           <Route path="products/:productId/" element={<SingleProduct />} />
           <Route path="user/basket" element={<PrivateRoute><UserBasket /></PrivateRoute>} />
-          <Route path="user/favorites" element={<UserFavorites />} />
+          <Route path="user/favorites" element={<PrivateRoute><UserFavorites /></PrivateRoute>} />
           <Route path="user/shop-progress" element={<PrivateRoute><UserShoppingProgress /></PrivateRoute>} />
           <Route path="user/checkout" element={<PrivateRoute><UserCheckout /></PrivateRoute>} />
           <Route path="user/profile-edit" element={<PrivateRoute><UserProfileUpdate /></PrivateRoute>} />
