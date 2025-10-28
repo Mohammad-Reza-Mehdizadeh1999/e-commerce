@@ -31,7 +31,7 @@ const UserSingleOrder = () => {
   }
 
   return (
-    <div className="flex min-h-screen gap-20 pr-48 mt-15 ">
+    <div className="flex justify-center min-h-screen w-[95%] mx-auto gap-5 mt-15 ">
       <div className="w-1/2 h-[20%] border border-gray-700 p-8">
         <table className="w-full text-sm text-gray-700 table-fixed p-5">
           <thead className="text-gray-900 dark:text-[var(--color-white)] border-b-1 border-gray-700x">

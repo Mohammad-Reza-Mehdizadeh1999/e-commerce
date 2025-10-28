@@ -6,10 +6,9 @@ import Button from "./ui/Button";
 import { useNavigate } from "react-router-dom";
 
 const UserShoppingStep2 = ({ address, city, postcode }) => {
-
   const navigate = useNavigate();
 
-  const { cart, checkoutInfo , clearCart } = useCartContext();
+  const { cart, checkoutInfo, clearCart } = useCartContext();
 
   const shippingCost = 10000;
 
@@ -30,13 +29,11 @@ const UserShoppingStep2 = ({ address, city, postcode }) => {
       },
     };
 
-
     try {
       const response = await makeOrder(orderData);
       toast.success("سفارش با موفقیت ثبت شد!");
       clearCart();
-      navigate("/user/my-orders")
-
+      navigate("/user/my-orders");
     } catch (error) {
       console.error("❌ Error making order:", error);
       toast.error("مشکلی در ثبت سفارش پیش آمد!");
@@ -44,7 +41,7 @@ const UserShoppingStep2 = ({ address, city, postcode }) => {
   };
 
   return (
-    <div className="flex flex-col  min-h-screen items-center gap-3">
+    <div className="flex flex-col w-[90%] mx-auto  min-h-screen items-center gap-3">
       <div className="flex justify-center items-center gap-4 mt-[60px]">
         <div className="flex flex-col gap-3 items-center">
           <div className="text-[16px] text-green-500">خلاصه خرید</div>
@@ -62,10 +59,10 @@ const UserShoppingStep2 = ({ address, city, postcode }) => {
         </div>
       </div>
 
-      <div className="flex justify-between w-[1536px] items-center my-[50px]">
-        <table className=" w-full text-sm  table-fixed">
-          <thead className="w-full ">
-            <tr className="  w-full font-bold">
+      <div className="w-full my-8 overflow-x-auto">
+        <table className="min-w-full text-sm border-collapse">
+          <thead>
+            <tr className="font-bold text-gray-200 border-b border-gray-600">
               <th className="px-4 py-2 text-right">عکس</th>
               <th className="px-4 py-2 text-right">نام محصول</th>
               <th className="px-4 py-2 text-center">تعداد</th>
@@ -87,52 +84,59 @@ const UserShoppingStep2 = ({ address, city, postcode }) => {
         </table>
       </div>
 
-      <div className="flex flex-col w-[1536px] gap-4 ">
-        <div>خلاصه خرید</div>
-        <div className="flex bg-[#E6E8EB]  rounded-[8px] justify-between p-[20px] dark:bg-[#151515]">
-          <div className="flex flex-col gap-3">
-            <div>روش پرداخت</div>
+      {/* خلاصه خرید */}
+      <div className="flex flex-col w-full max-w-7xl gap-4">
+        <h2 className="font-semibold text-lg">خلاصه خرید</h2>
+
+        <div className="flex flex-col lg:flex-row bg-[#E6E8EB] dark:bg-[#151515] rounded-[8px] justify-between p-5 gap-6">
+          {/* روش پرداخت */}
+          <div className="flex flex-col gap-2 text-sm sm:text-base">
+            <h3 className="font-semibold">روش پرداخت</h3>
             <p>روش: درگاه پرداخت پاسارگاد</p>
           </div>
-          <div className="flex flex-col gap-3">
-            <h2>آدرس دریافت</h2>
+
+          {/* آدرس */}
+          <div className="flex flex-col gap-2 text-sm sm:text-base">
+            <h3 className="font-semibold">آدرس دریافت</h3>
             <p>آدرس: {address}</p>
+            <p>شهر: {city}</p>
+            <p>کد پستی: {postcode}</p>
           </div>
-          <div className="flex  w-[20%]  flex-col gap-1.5">
-            <div className="flex justify-between ">
-              <div>قیمت محصولات:</div>
-              <div>{checkoutInfo.totalPrice.toLocaleString()} تومان</div>
-            </div>
 
+          {/* قیمت‌ها */}
+          <div className="flex flex-col gap-2 text-sm sm:text-base w-full lg:w-[30%]">
             <div className="flex justify-between">
-              <div>هزینه ارسال:</div>
-              <div>{shippingCost.toLocaleString()} تومان</div>
+              <span>قیمت محصولات:</span>
+              <span>{checkoutInfo.totalPrice.toLocaleString()} تومان</span>
             </div>
-
             <div className="flex justify-between">
-              <div>مالیات:</div>
-              <div>
+              <span>هزینه ارسال:</span>
+              <span>{shippingCost.toLocaleString()} تومان</span>
+            </div>
+            <div className="flex justify-between">
+              <span>مالیات:</span>
+              <span>
                 {(checkoutInfo.totalPrice * 0.1).toLocaleString()} تومان
-              </div>
+              </span>
             </div>
-
-            <div className="flex justify-between font-bold">
-              <div>مبلغ نهایی:</div>
-              <div>
+            <div className="flex justify-between font-bold border-t border-gray-500 pt-2">
+              <span>مبلغ نهایی:</span>
+              <span>
                 {(
                   checkoutInfo.totalPrice +
                   shippingCost +
                   checkoutInfo.totalPrice * 0.1
                 ).toLocaleString()}{" "}
                 تومان
-              </div>
+              </span>
             </div>
           </div>
         </div>
+
         <Button
-          className="rounded-2xl h-[48px] bg-pink-500 text-white cursor-pointer hover:bg-pink-600"
+          className="rounded-2xl h-[48px] bg-pink-500 text-white cursor-pointer hover:bg-pink-600 mt-4"
           type="button"
-          onClick={() => handleCompleteOrder()}
+          onClick={handleCompleteOrder}
         >
           ثبت سفارش
         </Button>

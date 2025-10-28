@@ -14,7 +14,7 @@ const CheckoutDetails = ({
   isPaid,
 }) => {
   return (
-    <div className="w-[45%] flex flex-col gap-6">
+    <div className=" flex flex-col gap-6">
       <div className="flex flex-col gap-6">
         <h2 className="font-medium text-xl text-[var(--color-black)] dark:text-[var(--color-white)]">
           آدرس دریافت
