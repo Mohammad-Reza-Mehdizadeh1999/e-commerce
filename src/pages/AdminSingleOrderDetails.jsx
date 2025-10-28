@@ -64,7 +64,7 @@ const AdminSingleOrderDetails = () => {
 
 
   return (
-    <div className="flex min-h-screen justify-center gap-20 pr-36 mt-15 w-full">
+    <div className="flex min-h-screen justify-center gap-10 mt-15 w-[90%] mx-auto">
       <div className="w-1/2 h-[20%] border border-gray-700 p-8">
         <table className="w-full text-sm text-gray-700 table-fixed p-5">
           <thead className="text-gray-900 dark:text-[var(--color-white)] border-b-1 border-gray-700x">

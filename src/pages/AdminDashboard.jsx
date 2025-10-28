@@ -81,18 +81,18 @@ const AdminDashboard = () => {
   const dataMax = Math.max(...chartData.map((item) => item.sales), 0);
 
   return (
-    <div className="flex flex-col gap-10 pt-[10px] mb-[10px] relative min-h-screen">
-      <div className="w-[60%] mx-auto grid grid-cols-1 md:grid-cols-3 gap-20 p-4">
+    <div className="flex flex-col gap-10 pt-[10px] mb-[10px] relative min-h-screen dark:bg-black">
+      <div className="w-[85%] mx-auto grid grid-cols-1 md:grid-cols-3 gap-20 p-4">
         {admainDashboardCardDatas.map((card) => (
           <AdmainDashboardStatusCard {...card} key={card.id} />
         ))}
       </div>
 
-      <div className="w-full rounded-2xl p-6 max-w-[1600px] mx-auto h-[550px]">
+      <div className="w-full md:w-[90%] mx-auto rounded-2xl p-6 h-[550px] bg-white dark:bg-black shadow-md">
         <h3 className=" mb-4 text-sm font-bold text-right dark:text-white text-black">
           نمودار فروش
         </h3>
-        <div className="w-full h-full">
+        <div className="w-full h-full dark:bg-black pb-5">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={chartData}>
               <CartesianGrid
@@ -128,9 +128,9 @@ const AdminDashboard = () => {
             </BarChart>
           </ResponsiveContainer>
         </div>
-        <h3 className=" dark:text-white text-black mb-4 text-sm font-bold text-center pt-6 ">
+        {/* <h3 className="w-full dark:text-white text-black mb-4 text-sm font-bold text-center pt-6 bg-white dark:bg-black">
           تاریخ
-        </h3>
+        </h3> */}
       </div>
     </div>
   );
