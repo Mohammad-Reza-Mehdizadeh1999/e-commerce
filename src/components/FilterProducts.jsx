@@ -40,7 +40,7 @@ const FilterProducts = ({
   };
 
   return (
-    <div className="bg-[#111] text-white p-5 rounded-lg w-60 flex flex-col justify-center items-center space-y-7 h-1/2 mr-10">
+    <div className="bg-[#111] text-white p-5 rounded-lg w-full flex flex-col justify-center items-center space-y-7 h-1/2 ">
       <div className="w-full">
         <button className="bg-black w-full py-2 rounded-full mb-3 font-semibold">
           فیلتر برند

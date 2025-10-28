@@ -47,11 +47,13 @@ export default function AllProducts() {
   };
 
   return (
-    <>
-      <div className="min-h-screen flex  mt-3 bg-black text-white px-6 ">
-        <FilterProducts setMinPrice={setMinPrice} setMaxPrice={setMaxPrice} minPrice={minPrice} maxPrice={maxPrice} setProducts={setProducts}/>
+    <div className="w-[90%] mx-auto">
+      <div className="min-h-screen w-full flex gap-5  mt-3 bg-black text-white px-6 ">
+        <div className="w-1/5 h-full">
+          <FilterProducts setMinPrice={setMinPrice} setMaxPrice={setMaxPrice} minPrice={minPrice} maxPrice={maxPrice} setProducts={setProducts}/>
+        </div>
 
-        <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 ">
+        <div className="max-w-7xl w-4/5 mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 ">
           {products.length > 0 ? (
             products.map((product) => (
               <ProductsPageProductCard
@@ -73,7 +75,7 @@ export default function AllProducts() {
       </div>
 
       {/* Pagination Controls */}
-      <div className="flex items-center justify-center gap-3">
+      <div className="flex items-center justify-center gap-3 my-5">
         <button
           onClick={() => handlePageChange(page - 1)}
           disabled={page === 1}
@@ -117,6 +119,6 @@ export default function AllProducts() {
           بعدی
         </button>
       </div>
-    </>
+    </div>
   );
 }

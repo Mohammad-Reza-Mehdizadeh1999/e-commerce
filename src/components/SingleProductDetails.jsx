@@ -8,7 +8,7 @@ export default function SingleProductDetails({product , productCategory}) {
   const [detailCategory, setDetailCategory] = useState("comment");
 
   return (
-    <section className="p-6 text-white bg-black w-2/3 mx-auto gap-3 flex justify-between">
+    <section className="p-6 text-white bg-black w-4/5 mx-auto gap-3 flex justify-between">
       <div className="flex flex-col items-start  gap-5">
         <Button
           onClick={() => setDetailCategory("comment")}
