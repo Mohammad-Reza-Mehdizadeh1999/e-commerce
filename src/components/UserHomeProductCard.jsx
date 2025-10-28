@@ -6,7 +6,7 @@ export default function UserHomeProductCard({ product }) {
   return (
     <Link
       to={`/products/${product._id}`}
-      className="relative bg-slate-800 rounded-md overflow-hidden hover:scale-105 transition-transform duration-300 shadow-lg"
+      className="relative bg-slate-800  rounded-md overflow-hidden hover:scale-105 transition-transform duration-300 shadow-lg"
     >
       <img
         src={product.image}
@@ -19,8 +19,8 @@ export default function UserHomeProductCard({ product }) {
       </button>
 
       <div className="p-1.5 flex items-center justify-between gap-1 text-white text-sm">
-        <span className="truncate max-w-[190px]">{product.name}</span>
-        <span className="bg-[var(--color-pink-primary)] text-[12px] px-2 py-1 rounded-full">
+        <span className="truncate max-w-[170px]">{product.name}</span>
+        <span className="bg-[var(--color-pink-primary)] text-[10px] px-2 py-1 rounded-full">
           {product.price.toLocaleString()} تومان
         </span>
       </div>

@@ -15,12 +15,11 @@ export default function UserHomePage() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
-
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         const data = await getAllProducts();
-                
+
         setProducts(data);
       } catch (error) {
         toast.error("خطا در دریافت محصولات از سرور!");
@@ -35,21 +34,24 @@ export default function UserHomePage() {
 
   if (loading) {
     return (
-    <div className="flex flex-col gap-3 items-center justify-center h-screen text-white">
-      <Spinner />
-      <p className="text-gray-300 mt-2">در حال بارگذاری محصولات...</p>
-    </div>
+      <div className="flex flex-col gap-3 items-center justify-center h-screen text-white">
+        <Spinner />
+        <p className="text-gray-300 mt-2">در حال بارگذاری محصولات...</p>
+      </div>
     );
   }
 
   const rowItems = products.slice(0, 4);
 
-
   return (
     <main>
       <div className="flex justify-center items-center w-full">
-        <UserHomeProductRow rowItems={rowItems} />
-        <UserHomeProductCarousel rowItems={rowItems} />
+        <div className="w-1/2">
+          <UserHomeProductRow rowItems={rowItems} />
+        </div>
+        <div className="w-1/2">
+          <UserHomeProductCarousel rowItems={rowItems} />
+        </div>
       </div>
       <UserHomeSpecialProductsSection products={products} />
     </main>
